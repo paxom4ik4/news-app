@@ -1,0 +1,10 @@
+.header {
+  width: 100%;
+  position: fixed;
+  z-index: 5;
+}
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

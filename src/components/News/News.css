@@ -1,0 +1,37 @@
+.container-fluid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  column-gap: 5%;
+  row-gap: 40px;
+  animation: loyalNewsItem 0.4s;
+  margin-top: 40px;
+}
+
+@keyframes loyalNewsItem {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.no-news {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 1200px) {
+  .container-fluid {
+    grid-template-columns: 45% 45%;
+  }
+}
+
+@media (max-width: 720px) {
+  .container-fluid {
+    grid-template-columns: 100%;
+  }
+}
