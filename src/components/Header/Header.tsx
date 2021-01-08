@@ -6,7 +6,7 @@ import { Navbar, NavbarBrand } from "reactstrap";
 const Header = (props: {
   serchNews: (serchValue: string) => void;
 }): JSX.Element => {
-  const serchNews = props.serchNews;
+  const serchNews: (serchValue: string) => void = props.serchNews;
   return (
     <div className="header">
       <Navbar color="light" light expand="md">

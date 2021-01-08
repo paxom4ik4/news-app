@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./App.css";
 import Header from "../Header";
 import INewsItem from "../../interfaces/INews";
 import News from "../News";
@@ -22,14 +21,14 @@ const App: React.FC = (): JSX.Element => {
       id: maxId++,
     },
     {
-      title: "Британский регулятор начал проверять сделку по покупке Arm",
-      subtitle: "Законодательство в IT",
+      title: "На YouTube полно видео про инвестиции.",
+      subtitle: "Экономика. Образование",
       text:
-        "Британское Управление по конкуренции и рынкам начало расследование по факту поглощения американской компанией Nvidia британской компании-разработчика микросхем Arm за $40 млрд. Оно призвало заинтересованную стороны представить свои мнения по спорной сделке до начала официального разбирательства.",
+        "На новогодних праздниках можно без зазрения совести уйти в YouTube. Но что там смотреть — выбирать вам. Мы предлагаем совместить приятное с полезным и познакомиться с каналами про инвестиции. Собрали для вас несколько авторов, вместе с которыми сможете погрузиться в мир финансов и торговли. Узнаете, как оценивать компанию и финансовую отчетность, как читать новости и стоит ли это делать вообще. А еще — какие ценные бумаги  покупают аналитики и другие частные инвесторы. Кто-то ведет канал с юмором, а кто-то — максимально серьезно. Выбирайте, что вам ближе по настроению",
       imgUrl:
-        "https://habrastorage.org/webt/17/9w/g2/179wg2nw2rxfer4ak6hizn-nyim.jpeg",
+        "https://s0.rbk.ru/v6_top_pics/resized/1200xH/media/img/2/26/755863669219262.png",
       isDeleted: false,
-      group: "IT",
+      group: "Economy",
       isActive: true,
       id: maxId++,
     },
@@ -46,10 +45,35 @@ const App: React.FC = (): JSX.Element => {
       isActive: true,
       id: maxId++,
     },
+    {
+      title:
+        "Эксперты рассказали, какие криптовалюты сильно вырастут в этом году",
+      subtitle: "Экономика. Криптовалюта",
+      text:
+        "Ethereum за год подорожал на 800 %, сейчас альткоин стоит 1,25 тыс. долларов. График многих криптовалют оказался похож, но остались те, кто за последний год почти не изменился в цене.",
+      imgUrl:
+        "https://avatars.mds.yandex.net/get-ynews/2380313/a160aba0c2406e3ccfef6ef0d50b4222/400x200",
+      isDeleted: false,
+      group: "Economy",
+      isActive: true,
+      id: maxId++,
+    },
+    {
+      title: "Британский регулятор начал проверять сделку по покупке Arm",
+      subtitle: "Законодательство в IT",
+      text:
+        "Британское Управление по конкуренции и рынкам начало расследование по факту поглощения американской компанией Nvidia британской компании-разработчика микросхем Arm за $40 млрд. Оно призвало заинтересованную стороны представить свои мнения по спорной сделке до начала официального разбирательства.",
+      imgUrl:
+        "https://habrastorage.org/webt/17/9w/g2/179wg2nw2rxfer4ak6hizn-nyim.jpeg",
+      isDeleted: false,
+      group: "IT",
+      isActive: true,
+      id: maxId++,
+    },
   ]);
 
   const deleteNewsItem = (id: number): void => {
-    const deleteItemIdx = news.findIndex((el) => el.id === id);
+    const deleteItemIdx: number = news.findIndex((el) => el.id === id);
 
     const newsUpdated = [
       ...news.slice(0, deleteItemIdx),
@@ -60,9 +84,9 @@ const App: React.FC = (): JSX.Element => {
   };
 
   const onToggleDelete = (id: number): void => {
-    const deleteItemIdx = news.findIndex((el) => el.id === id);
-    const oldItem = news[deleteItemIdx];
-    const newItem = { ...oldItem, isDeleted: !oldItem.isDeleted };
+    const deleteItemIdx: number = news.findIndex((el) => el.id === id);
+    const oldItem: INewsItem = news[deleteItemIdx];
+    const newItem: INewsItem = { ...oldItem, isDeleted: !oldItem.isDeleted };
 
     const newsUpdated = [
       ...news.slice(0, deleteItemIdx),
@@ -76,8 +100,8 @@ const App: React.FC = (): JSX.Element => {
   const dropDonwHandler = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
-    const targetElement = event.target as HTMLTextAreaElement;
-    const targetValue = targetElement.textContent;
+    const targetElement: HTMLElement = event.target as HTMLTextAreaElement;
+    const targetValue: string | null = targetElement.textContent;
 
     const newsUpdated: Array<INewsItem> = [];
     if (targetValue === "All") {
@@ -110,9 +134,9 @@ const App: React.FC = (): JSX.Element => {
     group: string,
     url: string
   ) => {
-    const editItemIdx = news.findIndex((el) => el.id === id);
-    const editItem = news[editItemIdx];
-    const newItem = {
+    const editItemIdx: number = news.findIndex((el) => el.id === id);
+    const editItem: INewsItem = news[editItemIdx];
+    const newItem: INewsItem = {
       ...editItem,
       title,
       subtitle,

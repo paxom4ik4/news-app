@@ -54,7 +54,7 @@ const NewsItem = (props: {
   const deleteIcon = <FontAwesomeIcon icon={faTrash} />;
   const [modal, setModal] = useState<boolean>(false);
 
-  const userWidth = window.innerWidth;
+  const userWidth: number = window.innerWidth;
 
   const [editModal, setEditModal] = useState<boolean>(false);
   const toggleModal: () => void = () => setEditModal(!editModal);
@@ -65,36 +65,46 @@ const NewsItem = (props: {
   const [editGroup, setEditGroup] = useState<string>(group);
   const [editUrl, setEditUrl] = useState<string>(imgUrl);
 
-  const editTitleHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const editTitleHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
     const value = e.currentTarget.value;
     setEditTitle(value);
   };
-  const editSubtitleHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const editSubtitleHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
     const value = e.currentTarget.value;
     setEditSubtitle(value);
   };
-  const editTextHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const editTextHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
     const value = e.currentTarget.value;
     setEditText(value);
   };
-  const editGroupHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const editGroupHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
     const value = e.currentTarget.value;
     setEditGroup(value);
   };
-  const editUrlHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const editUrlHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
     const value = e.currentTarget.value;
     setEditUrl(value);
   };
 
   const [newError, setNewError] = useState<boolean>(false);
 
-  const editModalContent = (
+  const editModalContent: React.ReactFragment = (
     <div>
       <Modal isOpen={editModal} toggle={toggleModal} className="new-item-modal">
-        <ModalHeader toggle={toggleModal}>Add something new</ModalHeader>
+        <ModalHeader toggle={toggleModal}>Редактировать</ModalHeader>
         <Form>
           <FormGroup>
-            <Label for="newsTitle">Title</Label>
+            <Label for="newsTitle">Заголовок</Label>
             <Input
               required
               value={editTitle}
@@ -108,7 +118,7 @@ const NewsItem = (props: {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="newsSubtitle">Subtitle</Label>
+            <Label for="newsSubtitle">Подзаголовок</Label>
             <Input
               value={editSubtitle}
               type="text"
@@ -121,7 +131,7 @@ const NewsItem = (props: {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="newsText">News Text</Label>
+            <Label for="newsText">Текст</Label>
             <Input
               required
               value={editText}
@@ -134,7 +144,7 @@ const NewsItem = (props: {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="newsGroup">Select group</Label>
+            <Label for="newsGroup">Категория</Label>
             <Input
               type="select"
               name="group"
@@ -148,10 +158,13 @@ const NewsItem = (props: {
               <option>IT</option>
               <option>Science</option>
               <option>Medicine</option>
+              <option>Politics</option>
+              <option>Sport</option>
+              <option>Culture</option>
             </Input>
           </FormGroup>
           <FormGroup>
-            <Label for="newsUrl">Image URL</Label>
+            <Label for="newsUrl">URL Изображения</Label>
             <Input
               value={editUrl}
               type="text"

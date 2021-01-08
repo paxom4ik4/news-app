@@ -19,3 +19,7 @@
   bottom: 10px;
   right: 20px;
 }
+
+.dropdown-menu {
+  padding: 0;
+}
