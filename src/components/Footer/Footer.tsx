@@ -29,8 +29,16 @@ const Footer = (props: {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggle = (): void => setIsOpen((prevState) => !prevState);
 
-  const dropDonwHandler = props.dropDonwHandler;
-  const addNewItem = props.addNewItem;
+  const dropDonwHandler: (
+    e: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => void = props.dropDonwHandler;
+  const addNewItem: (
+    title: string,
+    subtitle: string,
+    text: string,
+    group: string,
+    url: string
+  ) => void = props.addNewItem;
 
   const filterMenu = (
     <Dropdown direction="up" isOpen={isOpen} toggle={toggle}>
@@ -41,6 +49,9 @@ const Footer = (props: {
         <DropdownItem>IT</DropdownItem>
         <DropdownItem>Science</DropdownItem>
         <DropdownItem>Medicine</DropdownItem>
+        <DropdownItem>Politics</DropdownItem>
+        <DropdownItem>Sport</DropdownItem>
+        <DropdownItem>Culture</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );
@@ -54,42 +65,52 @@ const Footer = (props: {
   const [newGroup, setNewGroup] = useState<string>("Economy");
   const [newUrl, setNewUrl] = useState<string>("");
 
-  const newTitleHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const newTitleHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
     const value = e.currentTarget.value;
     setNewTitle(value);
   };
-  const newSubtitleHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const newSubtitleHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
     const value = e.currentTarget.value;
     setNewSubtitle(value);
   };
-  const newTextHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const newTextHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
     const value = e.currentTarget.value;
     setNewText(value);
   };
-  const newGroupHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const newGroupHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
     const value = e.currentTarget.value;
     setNewGroup(value);
   };
-  const newUrlHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const newUrlHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
     const value = e.currentTarget.value;
     setNewUrl(value);
   };
 
   const [newError, setNewError] = useState<boolean>(false);
 
-  const addIcon = <FontAwesomeIcon icon={faPlusSquare} />;
-  const userWidth = window.innerWidth;
-  const bigAddBtn = <span>{addIcon} Add new</span>;
-  const addNew = (
+  const addIcon: JSX.Element = <FontAwesomeIcon icon={faPlusSquare} />;
+  const userWidth: number = window.innerWidth;
+  const bigAddBtn: JSX.Element = <span>{addIcon} Добавить</span>;
+  const addNew: React.ReactFragment = (
     <div>
       <Button color="primary" onClick={toggleModal}>
         {userWidth < 375 ? addIcon : bigAddBtn}
       </Button>
       <Modal isOpen={modal} toggle={toggleModal} className="new-item-modal">
-        <ModalHeader toggle={toggleModal}>Add something new</ModalHeader>
+        <ModalHeader toggle={toggleModal}>Добавьте что-то новое</ModalHeader>
         <Form>
           <FormGroup>
-            <Label for="newsTitle">Title</Label>
+            <Label for="newsTitle">Заголовок</Label>
             <Input
               required
               value={newTitle}
@@ -103,7 +124,7 @@ const Footer = (props: {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="newsSubtitle">Subtitle</Label>
+            <Label for="newsSubtitle">Подзаголовок</Label>
             <Input
               value={newSubtitle}
               type="text"
@@ -116,7 +137,7 @@ const Footer = (props: {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="newsText">News Text</Label>
+            <Label for="newsText">Текст</Label>
             <Input
               required
               value={newText}
@@ -129,7 +150,7 @@ const Footer = (props: {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="newsGroup">Select group</Label>
+            <Label for="newsGroup">Категория</Label>
             <Input
               type="select"
               name="group"
@@ -143,10 +164,13 @@ const Footer = (props: {
               <option>IT</option>
               <option>Science</option>
               <option>Medicine</option>
+              <option>Politics</option>
+              <option>Sport</option>
+              <option>Culture</option>
             </Input>
           </FormGroup>
           <FormGroup>
-            <Label for="newsUrl">Image URL</Label>
+            <Label for="newsUrl">URL Изображения</Label>
             <Input
               value={newUrl}
               type="text"

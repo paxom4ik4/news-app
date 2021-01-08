@@ -15,7 +15,7 @@ const Search = (props: {
     setSearchValue(value);
   };
 
-  const serchNews = props.serchNews;
+  const serchNews: (serchValue: string) => void = props.serchNews;
 
   return (
     <div className="search">

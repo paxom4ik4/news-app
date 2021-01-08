@@ -22,7 +22,7 @@ const News = (props: {
   const onToggleDelete = props.onToggleDelete;
   const editItem = props.editItem;
 
-  const newsItems = news.map((elem, index) => {
+  const newsItems: React.ReactFragment[] = news.map((elem, index) => {
     return (
       <NewsItem
         key={index.toString()}
