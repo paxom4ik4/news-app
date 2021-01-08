@@ -1,0 +1,49 @@
+.news-item {
+  width: 100%;
+  animation: loyalNewsItem 0.2s;
+}
+
+@keyframes loyalNewsItem {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.news-item .card .card-img-top {
+  padding: 15px;
+}
+
+.card-body .btn {
+  border-color: #000000;
+  align-self: flex-end;
+  margin-right: 10px;
+  color: #000000;
+  background: 0;
+}
+
+.news-item-deleted {
+  animation: deleteItem 0.2s;
+}
+
+@keyframes deleteItem {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.news-item-hidden {
+  display: none;
+}
+
+@media (max-width: 375px) {
+  .card-body .btn {
+    width: 40px;
+    height: 40px;
+  }
+}
