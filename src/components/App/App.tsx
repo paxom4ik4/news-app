@@ -110,7 +110,6 @@ const App: React.FC = (): JSX.Element => {
     group: string,
     url: string
   ) => {
-    
     const editItemIdx = news.findIndex((el) => el.id === id);
     const editItem = news[editItemIdx];
     const newItem = {
@@ -151,9 +150,34 @@ const App: React.FC = (): JSX.Element => {
     setNews(newsUpdated);
   };
 
+  const serchNews = (searchValue: string): void => {
+    const newsUpdated: Array<INewsItem> = [];
+    if (searchValue.trim() === "") {
+      news.forEach((elem) => {
+        elem.isActive = true;
+        newsUpdated.push(elem);
+      });
+    } else {
+      news.forEach((elem) => {
+        if (
+          elem.text
+            .toLocaleLowerCase()
+            .includes(searchValue.toLocaleLowerCase())
+        ) {
+          elem.isActive = true;
+        } else {
+          elem.isActive = false;
+        }
+        newsUpdated.push(elem);
+      });
+    }
+
+    setNews(newsUpdated);
+  };
+
   return (
     <div className="app">
-      <Header />
+      <Header serchNews={serchNews} />
       <News
         news={news}
         deleteNewsItem={deleteNewsItem}

@@ -3,12 +3,15 @@ import "./Header.css";
 import Search from "./Search";
 import { Navbar, NavbarBrand } from "reactstrap";
 
-const Header: React.FC = (): JSX.Element => {
+const Header = (props: {
+  serchNews: (serchValue: string) => void;
+}): JSX.Element => {
+  const serchNews = props.serchNews;
   return (
     <div className="header">
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">News</NavbarBrand>
-        <Search />
+        <Search serchNews={serchNews} />
       </Navbar>
     </div>
   );
