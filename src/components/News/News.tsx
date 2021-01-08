@@ -8,10 +8,19 @@ const News = (props: {
   news: INewsItem[];
   deleteNewsItem: (id: number) => void;
   onToggleDelete: (id: number) => void;
+  editItem: (
+    id: number,
+    title: string,
+    subtitle: string,
+    text: string,
+    group: string,
+    imgUrl: string
+  ) => void;
 }): JSX.Element => {
   const news = props.news;
   const deleteNewsItem = props.deleteNewsItem;
   const onToggleDelete = props.onToggleDelete;
+  const editItem = props.editItem;
 
   const newsItems = news.map((elem, index) => {
     return (
@@ -22,10 +31,12 @@ const News = (props: {
         text={elem.text}
         imgUrl={elem.imgUrl}
         id={elem.id}
+        group={elem.group}
         isDeleted={elem.isDeleted}
         isActive={elem.isActive}
         onToggleDelete={onToggleDelete}
         deleteNewsItem={deleteNewsItem}
+        editItem={editItem}
       />
     );
   });

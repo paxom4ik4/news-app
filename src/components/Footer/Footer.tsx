@@ -58,7 +58,6 @@ const Footer = (props: {
     const value = e.currentTarget.value;
     setNewTitle(value);
   };
-
   const newSubtitleHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
     setNewSubtitle(value);

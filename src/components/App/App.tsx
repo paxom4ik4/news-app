@@ -102,6 +102,34 @@ const App: React.FC = (): JSX.Element => {
     }
   };
 
+  const editItem = (
+    id: number,
+    title: string,
+    subtitle: string,
+    text: string,
+    group: string,
+    url: string
+  ) => {
+    
+    const editItemIdx = news.findIndex((el) => el.id === id);
+    const editItem = news[editItemIdx];
+    const newItem = {
+      ...editItem,
+      title,
+      subtitle,
+      text,
+      group,
+      imgUrl: url,
+    };
+    const newsUpdated = [
+      ...news.slice(0, editItemIdx),
+      newItem,
+      ...news.slice(editItemIdx + 1),
+    ];
+
+    setNews(newsUpdated);
+  };
+
   const addNewItem = (
     title: string,
     subtitle: string,
@@ -130,6 +158,7 @@ const App: React.FC = (): JSX.Element => {
         news={news}
         deleteNewsItem={deleteNewsItem}
         onToggleDelete={onToggleDelete}
+        editItem={editItem}
       />
       <Footer dropDonwHandler={dropDonwHandler} addNewItem={addNewItem} />
     </div>
