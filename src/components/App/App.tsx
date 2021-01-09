@@ -72,6 +72,24 @@ const App: React.FC = (): JSX.Element => {
     },
   ]);
 
+  const [groups, setGroups] = useState<Array<string>>([
+    "All",
+    "Economy",
+    "IT",
+    "Science",
+    "Medicine",
+    "Politics",
+    "Sport",
+    "Culture",
+  ]);
+
+  const setNewNewsGroup = (newGroup: string) => {
+    const groupsUpdated =
+      groups.indexOf(newGroup) !== -1 ? groups : [...groups, newGroup];
+
+    setGroups(groupsUpdated);
+  };
+
   const deleteNewsItem = (id: number): void => {
     const deleteItemIdx: number = news.findIndex((el) => el.id === id);
 
@@ -131,7 +149,6 @@ const App: React.FC = (): JSX.Element => {
     title: string,
     subtitle: string,
     text: string,
-    group: string,
     url: string
   ) => {
     const editItemIdx: number = news.findIndex((el) => el.id === id);
@@ -141,7 +158,6 @@ const App: React.FC = (): JSX.Element => {
       title,
       subtitle,
       text,
-      group,
       imgUrl: url,
     };
     const newsUpdated = [
@@ -158,18 +174,34 @@ const App: React.FC = (): JSX.Element => {
     subtitle: string,
     text: string,
     group: string,
+    newGroup: string,
     url: string
   ) => {
-    const newItem = {
-      title: title,
-      subtitle: subtitle,
-      text: text,
-      imgUrl: url,
-      isDeleted: false,
-      group: group,
-      isActive: true,
-      id: maxId++,
-    };
+    let newItem;
+    if (newGroup !== "" || newGroup.trim() !== "") {
+      setNewNewsGroup(newGroup);
+      newItem = {
+        title: title,
+        subtitle: subtitle,
+        text: text,
+        imgUrl: url,
+        isDeleted: false,
+        group: newGroup,
+        isActive: true,
+        id: maxId++,
+      };
+    } else {
+      newItem = {
+        title: title,
+        subtitle: subtitle,
+        text: text,
+        imgUrl: url,
+        isDeleted: false,
+        group: group,
+        isActive: true,
+        id: maxId++,
+      };
+    }
     const newsUpdated = [...news, newItem];
     setNews(newsUpdated);
   };
@@ -208,7 +240,11 @@ const App: React.FC = (): JSX.Element => {
         onToggleDelete={onToggleDelete}
         editItem={editItem}
       />
-      <Footer dropDonwHandler={dropDonwHandler} addNewItem={addNewItem} />
+      <Footer
+        dropDonwHandler={dropDonwHandler}
+        addNewItem={addNewItem}
+        groups={groups}
+      />
     </div>
   );
 };

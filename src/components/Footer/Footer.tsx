@@ -23,8 +23,10 @@ const Footer = (props: {
     subtitle: string,
     text: string,
     group: string,
+    newGroup: string,
     url: string
   ) => void;
+  groups: Array<string>;
 }): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggle = (): void => setIsOpen((prevState) => !prevState);
@@ -37,21 +39,20 @@ const Footer = (props: {
     subtitle: string,
     text: string,
     group: string,
+    newGroup: string,
     url: string
   ) => void = props.addNewItem;
+  const groups = props.groups;
+
+  const dropDownItems: React.ReactFragment = groups.map((elem, id) => {
+    return <DropdownItem key={id}>{elem}</DropdownItem>;
+  });
 
   const filterMenu = (
     <Dropdown direction="up" isOpen={isOpen} toggle={toggle}>
       <DropdownToggle caret>Фильтровать новости</DropdownToggle>
       <DropdownMenu onClick={(e) => dropDonwHandler(e)}>
-        <DropdownItem>All</DropdownItem>
-        <DropdownItem>Economy</DropdownItem>
-        <DropdownItem>IT</DropdownItem>
-        <DropdownItem>Science</DropdownItem>
-        <DropdownItem>Medicine</DropdownItem>
-        <DropdownItem>Politics</DropdownItem>
-        <DropdownItem>Sport</DropdownItem>
-        <DropdownItem>Culture</DropdownItem>
+        {dropDownItems}
       </DropdownMenu>
     </Dropdown>
   );
@@ -64,6 +65,7 @@ const Footer = (props: {
   const [newText, setNewText] = useState<string>("");
   const [newGroup, setNewGroup] = useState<string>("Economy");
   const [newUrl, setNewUrl] = useState<string>("");
+  const [newsGroupNew, setNewsGroupNew] = useState<string>("");
 
   const newTitleHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
     e: React.FormEvent<HTMLInputElement>
@@ -94,6 +96,12 @@ const Footer = (props: {
   ) => {
     const value = e.currentTarget.value;
     setNewUrl(value);
+  };
+  const newGroupNewsHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
+    const value = e.currentTarget.value;
+    setNewsGroupNew(value);
   };
 
   const [newError, setNewError] = useState<boolean>(false);
@@ -160,14 +168,22 @@ const Footer = (props: {
                 newGroupHandler(e)
               }
             >
-              <option>Economy</option>
-              <option>IT</option>
-              <option>Science</option>
-              <option>Medicine</option>
-              <option>Politics</option>
-              <option>Sport</option>
-              <option>Culture</option>
+              {groups.map((elem, id) => {
+                return <option key={id}>{elem}</option>;
+              })}
             </Input>
+          </FormGroup>
+          <FormGroup>
+            <Label for="newsGroupNew">Или добавьте свою категорию</Label>
+            <Input
+              type="text"
+              name="newGroup"
+              id="newsGroupNew"
+              value={newsGroupNew}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                newGroupNewsHandler(e)
+              }
+            ></Input>
           </FormGroup>
           <FormGroup>
             <Label for="newsUrl">URL Изображения</Label>
@@ -183,17 +199,26 @@ const Footer = (props: {
             />
           </FormGroup>
           <Button
-            type={"submit"}
-            onClick={() => {
+            type="submit"
+            onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+              e.preventDefault();
               if (newTitle === "" || newText === "") {
                 setNewError(true);
               } else {
-                setNewError(false);
-                addNewItem(newTitle, newSubtitle, newText, newGroup, newUrl);
                 toggleModal();
+                setNewError(false);
+                addNewItem(
+                  newTitle,
+                  newSubtitle,
+                  newText,
+                  newGroup,
+                  newsGroupNew,
+                  newUrl
+                );
                 setNewTitle("");
                 setNewSubtitle("");
                 setNewText("");
+                setNewsGroupNew("");
                 setNewGroup("Economy");
                 setNewUrl("");
               }

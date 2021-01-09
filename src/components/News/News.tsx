@@ -13,7 +13,6 @@ const News = (props: {
     title: string,
     subtitle: string,
     text: string,
-    group: string,
     imgUrl: string
   ) => void;
 }): JSX.Element => {

@@ -35,7 +35,6 @@ const NewsItem = (props: {
     title: string,
     subtitle: string,
     text: string,
-    group: string,
     imgUrl: string
   ) => void;
 }) => {
@@ -44,7 +43,6 @@ const NewsItem = (props: {
   const text = props.text;
   const imgUrl = props.imgUrl;
   const id = props.id;
-  const group = props.group;
   const deleteNewsItem = props.deleteNewsItem;
   const onToggleDelete = props.onToggleDelete;
   const editItem = props.editItem;
@@ -62,7 +60,6 @@ const NewsItem = (props: {
   const [editTitle, setEditTitle] = useState<string>(title);
   const [editSubtitle, setEditSubtitle] = useState<string>(subtitle);
   const [editText, setEditText] = useState<string>(text);
-  const [editGroup, setEditGroup] = useState<string>(group);
   const [editUrl, setEditUrl] = useState<string>(imgUrl);
 
   const editTitleHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
@@ -82,12 +79,6 @@ const NewsItem = (props: {
   ) => {
     const value = e.currentTarget.value;
     setEditText(value);
-  };
-  const editGroupHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
-    e: React.FormEvent<HTMLInputElement>
-  ) => {
-    const value = e.currentTarget.value;
-    setEditGroup(value);
   };
   const editUrlHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
     e: React.FormEvent<HTMLInputElement>
@@ -144,26 +135,6 @@ const NewsItem = (props: {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="newsGroup">Категория</Label>
-            <Input
-              type="select"
-              name="group"
-              id="newsGroup"
-              value={editGroup}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                editGroupHandler(e)
-              }
-            >
-              <option>Economy</option>
-              <option>IT</option>
-              <option>Science</option>
-              <option>Medicine</option>
-              <option>Politics</option>
-              <option>Sport</option>
-              <option>Culture</option>
-            </Input>
-          </FormGroup>
-          <FormGroup>
             <Label for="newsUrl">URL Изображения</Label>
             <Input
               value={editUrl}
@@ -184,14 +155,7 @@ const NewsItem = (props: {
                 setNewError(true);
               } else {
                 setNewError(false);
-                editItem(
-                  id,
-                  editTitle,
-                  editSubtitle,
-                  editText,
-                  editGroup,
-                  editUrl
-                );
+                editItem(id, editTitle, editSubtitle, editText, editUrl);
                 toggleModal();
               }
             }}
