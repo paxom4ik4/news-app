@@ -24,6 +24,43 @@
   transform: translateX(-50%);
 }
 
+.news-container {
+  width: 100%;
+  animation: loyalMenuClose 0.4s;
+}
+
+.news-menu-open {
+  margin-left: 15%;
+  width: 85%;
+  animation: loyalMenu 0.4s;
+}
+
+.dark {
+  background-color: rgb(40, 40, 40);
+}
+
+@keyframes loyalMenuClose {
+  0% {
+    margin-left: 15%;
+    width: 85%;
+  }
+  100% {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@keyframes loyalMenu {
+  0% {
+    margin-left: 0;
+    width: 100%;
+  }
+  100% {
+    margin-left: 15%;
+    width: 85%;
+  }
+}
+
 @media (max-width: 1200px) {
   .container-fluid {
     grid-template-columns: 45% 45%;

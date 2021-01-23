@@ -28,6 +28,7 @@ const NewsItem = (props: {
   group: string;
   isDeleted: boolean;
   isActive: boolean;
+  publishedDate: string;
   deleteNewsItem: (id: number) => void;
   onToggleDelete: (id: number) => void;
   editItem: (
@@ -48,6 +49,7 @@ const NewsItem = (props: {
   const editItem = props.editItem;
   const isDeleted = props.isDeleted;
   const isActive = props.isActive;
+  const publishedDate = props.publishedDate;
   const editIcon = <FontAwesomeIcon icon={faEdit} />;
   const deleteIcon = <FontAwesomeIcon icon={faTrash} />;
   const [modal, setModal] = useState<boolean>(false);
@@ -181,7 +183,8 @@ const NewsItem = (props: {
           : "news-item-hidden"
       }
     >
-      <Card>
+      <Card className="dark-card">
+        <CardText>{publishedDate}</CardText>
         {imgUrl === "" ? (
           ""
         ) : (

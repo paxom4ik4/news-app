@@ -71,3 +71,8 @@
     height: 40px;
   }
 }
+
+.dark-card {
+  background-color: #000000;
+  color: #ffffff;
+}

@@ -2,9 +2,62 @@
   width: 100%;
   position: fixed;
   z-index: 5;
+  animation: headerClose 0.4s;
 }
 .navbar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.navbar .navbar-brand {
+  color: #ffffff;
+}
+
+.header-open {
+  margin-left: 15%;
+  width: 85%;
+  animation: headerLoyal 0.4s;
+}
+
+@keyframes headerClose {
+  0% {
+    width: 85%;
+    margin-left: 15%;
+  }
+  100% {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+@keyframes headerLoyal {
+  0% {
+    width: 100%;
+    margin-left: 0;
+  }
+  100% {
+    width: 85%;
+    margin-left: 15%;
+  }
+}
+
+.header-menu {
+  transition: 0.25s;
+  outline: 0;
+  border: 0;
+  background: 0;
+}
+.header-menu:focus {
+  outline: 0;
+  border: 0;
+}
+.header-menu-open {
+  transition: 0.3s;
+  transform: rotate(90deg);
+}
+
+.header-dark {
+  background-color: #000000;
+  color: #ffffff;
 }

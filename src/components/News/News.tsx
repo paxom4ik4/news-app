@@ -15,11 +15,13 @@ const News = (props: {
     text: string,
     imgUrl: string
   ) => void;
+  isMenuOpen: boolean;
 }): JSX.Element => {
   const news = props.news;
   const deleteNewsItem = props.deleteNewsItem;
   const onToggleDelete = props.onToggleDelete;
   const editItem = props.editItem;
+  const isMenuOpen = props.isMenuOpen;
 
   const newsItems: React.ReactFragment[] = news.map((elem, index) => {
     return (
@@ -36,14 +38,18 @@ const News = (props: {
         onToggleDelete={onToggleDelete}
         deleteNewsItem={deleteNewsItem}
         editItem={editItem}
+        publishedDate={elem.publishedDate}
       />
     );
   });
 
   const activeItems = news.filter((elem) => elem.isActive).length;
+  const menuClassName = isMenuOpen
+    ? "news-container news-menu-open"
+    : "news-container";
   return (
-    <div className="news-container">
-      <Jumbotron fluid>
+    <div className={menuClassName}>
+      <Jumbotron fluid className="dark">
         <Container fluid>
           {activeItems === 0 ? (
             <p className="no-news">Новостей нет</p>

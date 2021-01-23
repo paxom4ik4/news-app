@@ -3,9 +3,12 @@ import Header from "../Header";
 import INewsItem from "../../interfaces/INews";
 import News from "../News";
 import Footer from "../Footer";
+import { getDate } from "../../utils/getDate";
+import Menu from "../Menu/Menu";
 
 const App: React.FC = (): JSX.Element => {
   let maxId = 100;
+
   const [news, setNews] = useState<INewsItem[]>([
     {
       title:
@@ -19,6 +22,7 @@ const App: React.FC = (): JSX.Element => {
       group: "IT",
       isActive: true,
       id: maxId++,
+      publishedDate: getDate(),
     },
     {
       title: "На YouTube полно видео про инвестиции.",
@@ -31,6 +35,7 @@ const App: React.FC = (): JSX.Element => {
       group: "Economy",
       isActive: true,
       id: maxId++,
+      publishedDate: getDate(),
     },
     {
       title:
@@ -44,6 +49,7 @@ const App: React.FC = (): JSX.Element => {
       group: "Science",
       isActive: true,
       id: maxId++,
+      publishedDate: getDate(),
     },
     {
       title:
@@ -57,6 +63,7 @@ const App: React.FC = (): JSX.Element => {
       group: "Economy",
       isActive: true,
       id: maxId++,
+      publishedDate: getDate(),
     },
     {
       title: "Британский регулятор начал проверять сделку по покупке Arm",
@@ -69,8 +76,11 @@ const App: React.FC = (): JSX.Element => {
       group: "IT",
       isActive: true,
       id: maxId++,
+      publishedDate: getDate(),
     },
   ]);
+
+  const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
 
   const [groups, setGroups] = useState<Array<string>>([
     "All",
@@ -143,7 +153,6 @@ const App: React.FC = (): JSX.Element => {
       setNews(newsUpdated);
     }
   };
-
   const editItem = (
     id: number,
     title: string,
@@ -189,6 +198,7 @@ const App: React.FC = (): JSX.Element => {
         group: newGroup,
         isActive: true,
         id: maxId++,
+        publishedDate: getDate(),
       };
     } else {
       newItem = {
@@ -200,13 +210,14 @@ const App: React.FC = (): JSX.Element => {
         group: group,
         isActive: true,
         id: maxId++,
+        publishedDate: getDate(),
       };
     }
     const newsUpdated = [...news, newItem];
     setNews(newsUpdated);
   };
 
-  const serchNews = (searchValue: string): void => {
+  const searchNews = (searchValue: string): void => {
     const newsUpdated: Array<INewsItem> = [];
     if (searchValue.trim() === "") {
       news.forEach((elem) => {
@@ -231,10 +242,20 @@ const App: React.FC = (): JSX.Element => {
     setNews(newsUpdated);
   };
 
+  const menuOpenHandler = () => {
+    setMenuOpen(!isMenuOpen);
+  };
+
   return (
     <div className="app">
-      <Header serchNews={serchNews} />
+      {isMenuOpen ? <Menu isMenuOpen={isMenuOpen} /> : ""}
+      <Header
+        searchNews={searchNews}
+        isMenuOpen={isMenuOpen}
+        menuOpenHandler={menuOpenHandler}
+      />
       <News
+        isMenuOpen={isMenuOpen}
         news={news}
         deleteNewsItem={deleteNewsItem}
         onToggleDelete={onToggleDelete}
