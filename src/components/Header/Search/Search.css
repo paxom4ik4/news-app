@@ -2,14 +2,13 @@
   width: 30%;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .search {
     width: 50%;
   }
 }
-
-@media (max-width: 425px) {
+@media (max-width: 768px) {
   .search {
-    width: 75%;
+    width: 100%;
   }
 }

@@ -7,23 +7,29 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { IHeaderProps } from "../../interfaces/ComponentsProps";
 
 const Header: React.FC<IHeaderProps> = ({
+  darkMode,
   searchNews,
   isMenuOpen,
   menuOpenHandler,
 }): JSX.Element => {
-  const menuIcon = <FontAwesomeIcon icon={faBars} />;
+  const headerMenuIconClassName = darkMode
+    ? "header-menu-icon-dark"
+    : "header-menu-icon";
+  const menuIcon = (
+    <FontAwesomeIcon icon={faBars} className={headerMenuIconClassName} />
+  );
   const menuClassName = isMenuOpen ? "header header-open" : "header";
   const menuStyle = isMenuOpen ? "header-menu header-menu-open" : "header-menu";
-
-  const navbarClassName = "dark";
+  const navbarBrandClassName = darkMode ? "navbar-dark" : "navbar-light";
+  const navbarClassName = darkMode ? "dark" : "light";
   return (
     <div className={menuClassName}>
       <Navbar color={navbarClassName} expand="md">
-        <NavbarBrand>
+        <NavbarBrand className={navbarBrandClassName}>
+          News
           <button className={menuStyle} onClick={menuOpenHandler}>
             {menuIcon}
           </button>{" "}
-          News
         </NavbarBrand>
         <Search searchNews={searchNews} />
       </Navbar>

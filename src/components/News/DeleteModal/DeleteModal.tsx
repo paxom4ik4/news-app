@@ -1,18 +1,14 @@
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { IDeleteModalProps } from "../../../interfaces/ComponentsProps";
 
-const DeleteModal = (props: {
-  modal: boolean;
-  setModal: (arg0: boolean) => void;
-  deleteNewsItem: (id: number) => void;
-  onToggleDelete: (id: number) => void;
-  id: number;
+const DeleteModal: React.FC<IDeleteModalProps> = ({
+  modal,
+  setModal,
+  deleteNewsItem,
+  onToggleDelete,
+  id,
 }): JSX.Element => {
-  const modal = props.modal;
-  const toggle = (): void => props.setModal(!modal);
-  const deleteNewsItem = props.deleteNewsItem;
-  const onToggleDelete = props.onToggleDelete;
-  const id = props.id;
-
+  const toggle = (): void => setModal(!modal);
   const onSubmitHandler = (): void => {
     toggle();
     onToggleDelete(id);

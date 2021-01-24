@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import "./Footer.css";
 import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   Button,
   Modal,
   ModalHeader,
@@ -15,48 +11,12 @@ import {
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
+import { IFooterProps } from "../../interfaces/ComponentsProps";
 
-const Footer = (props: {
-  dropDonwHandler: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
-  addNewItem: (
-    title: string,
-    subtitle: string,
-    text: string,
-    group: string,
-    newGroup: string,
-    url: string
-  ) => void;
-  groups: Array<string>;
+const Footer: React.FC<IFooterProps> = ({
+  addNewItem,
+  groups,
 }): JSX.Element => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const toggle = (): void => setIsOpen((prevState) => !prevState);
-
-  const dropDonwHandler: (
-    e: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => void = props.dropDonwHandler;
-  const addNewItem: (
-    title: string,
-    subtitle: string,
-    text: string,
-    group: string,
-    newGroup: string,
-    url: string
-  ) => void = props.addNewItem;
-  const groups = props.groups;
-
-  const dropDownItems: React.ReactFragment = groups.map((elem, id) => {
-    return <DropdownItem key={id}>{elem}</DropdownItem>;
-  });
-
-  const filterMenu = (
-    <Dropdown direction="up" isOpen={isOpen} toggle={toggle}>
-      <DropdownToggle caret>Фильтровать новости</DropdownToggle>
-      <DropdownMenu onClick={(e) => dropDonwHandler(e)}>
-        {dropDownItems}
-      </DropdownMenu>
-    </Dropdown>
-  );
-
   const [modal, setModal] = useState<boolean>(false);
   const toggleModal: () => void = () => setModal(!modal);
 
@@ -235,12 +195,7 @@ const Footer = (props: {
       </Modal>
     </div>
   );
-  return (
-    <div className="footer">
-      {filterMenu}
-      {addNew}
-    </div>
-  );
+  return <div className="add-item-btn">{addNew}</div>;
 };
 
 export default Footer;

@@ -8,4 +8,5 @@ export default interface INewsItem {
   isActive: boolean;
   id: number;
   publishedDate: string;
+  publishedDateNumber: string;
 }

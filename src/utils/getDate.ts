@@ -67,3 +67,20 @@ export const getDate = () => {
 
   return `${day} ${monthString} ${year} ${hours}:${minutes}`;
 };
+
+export const getDateNumber = () => {
+  const date = new Date();
+  const day: number = date.getDate();
+  let month: string = date.getMonth().toString();
+  const year: number = date.getFullYear();
+  let hours: string = date.getHours().toString();
+  let minutes: string = date.getMinutes().toString();
+  let seconds: string = date.getSeconds().toString();
+
+  month = month.length < 2 ? `0${Number(month) + 1}` : month;
+  hours = hours.length < 2 ? `0${hours}` : hours;
+  minutes = minutes.length < 2 ? `0${minutes}` : minutes;
+  seconds = seconds.length < 2 ? `0${seconds}` : seconds;
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`;
+};

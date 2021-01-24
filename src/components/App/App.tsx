@@ -3,10 +3,12 @@ import Header from "../Header";
 import INewsItem from "../../interfaces/INews";
 import News from "../News";
 import Footer from "../Footer";
-import { getDate } from "../../utils/getDate";
+import { getDate, getDateNumber } from "../../utils/getDate";
 import Menu from "../Menu/Menu";
 
 const App: React.FC = (): JSX.Element => {
+  const [darkMode, setDarkMode] = useState<boolean>(false);
+
   let maxId = 100;
 
   const [news, setNews] = useState<INewsItem[]>([
@@ -23,6 +25,7 @@ const App: React.FC = (): JSX.Element => {
       isActive: true,
       id: maxId++,
       publishedDate: getDate(),
+      publishedDateNumber: getDateNumber(),
     },
     {
       title: "На YouTube полно видео про инвестиции.",
@@ -36,6 +39,7 @@ const App: React.FC = (): JSX.Element => {
       isActive: true,
       id: maxId++,
       publishedDate: getDate(),
+      publishedDateNumber: getDateNumber(),
     },
     {
       title:
@@ -50,6 +54,7 @@ const App: React.FC = (): JSX.Element => {
       isActive: true,
       id: maxId++,
       publishedDate: getDate(),
+      publishedDateNumber: getDateNumber(),
     },
     {
       title:
@@ -64,6 +69,7 @@ const App: React.FC = (): JSX.Element => {
       isActive: true,
       id: maxId++,
       publishedDate: getDate(),
+      publishedDateNumber: getDateNumber(),
     },
     {
       title: "Британский регулятор начал проверять сделку по покупке Arm",
@@ -77,11 +83,11 @@ const App: React.FC = (): JSX.Element => {
       isActive: true,
       id: maxId++,
       publishedDate: getDate(),
+      publishedDateNumber: getDateNumber(),
     },
   ]);
 
   const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
-
   const [groups, setGroups] = useState<Array<string>>([
     "All",
     "Economy",
@@ -199,6 +205,7 @@ const App: React.FC = (): JSX.Element => {
         isActive: true,
         id: maxId++,
         publishedDate: getDate(),
+        publishedDateNumber: getDateNumber(),
       };
     } else {
       newItem = {
@@ -211,6 +218,7 @@ const App: React.FC = (): JSX.Element => {
         isActive: true,
         id: maxId++,
         publishedDate: getDate(),
+        publishedDateNumber: getDateNumber(),
       };
     }
     const newsUpdated = [...news, newItem];
@@ -246,26 +254,62 @@ const App: React.FC = (): JSX.Element => {
     setMenuOpen(!isMenuOpen);
   };
 
+  const darkModeHandler = () => {
+    setDarkMode(!darkMode);
+  };
+
+  const sortByDate = () => {
+    const newsSorted = [...news];
+    newsSorted.sort((a, b) => {
+      const aDate: any = new Date(a.publishedDateNumber);
+      const bDate: any = new Date(b.publishedDateNumber);
+      return bDate - aDate;
+    });
+    setNews(newsSorted);
+  };
+
+  const sortByName = () => {
+    const newsSorted = [...news];
+    newsSorted.sort((a, b) => {
+      const aTitle = a.title.toLowerCase();
+      const bTitle = b.title.toLowerCase();
+      if (aTitle < bTitle) return -1;
+      if (aTitle > bTitle) return 1;
+      return 0;
+    });
+    setNews(newsSorted);
+  };
+
   return (
     <div className="app">
-      {isMenuOpen ? <Menu isMenuOpen={isMenuOpen} /> : ""}
+      {isMenuOpen ? (
+        <Menu
+          sortByName={sortByName}
+          sortByDate={sortByDate}
+          darkMode={darkMode}
+          darkModeHandler={darkModeHandler}
+          isMenuOpen={isMenuOpen}
+          groups={groups}
+          dropDonwHandler={dropDonwHandler}
+        />
+      ) : (
+        ""
+      )}
       <Header
+        darkMode={darkMode}
         searchNews={searchNews}
         isMenuOpen={isMenuOpen}
         menuOpenHandler={menuOpenHandler}
       />
       <News
+        darkMode={darkMode}
         isMenuOpen={isMenuOpen}
         news={news}
         deleteNewsItem={deleteNewsItem}
         onToggleDelete={onToggleDelete}
         editItem={editItem}
       />
-      <Footer
-        dropDonwHandler={dropDonwHandler}
-        addNewItem={addNewItem}
-        groups={groups}
-      />
+      <Footer addNewItem={addNewItem} groups={groups} />
     </div>
   );
 };
