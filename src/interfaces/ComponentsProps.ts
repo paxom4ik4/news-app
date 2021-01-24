@@ -19,6 +19,7 @@ export interface IMenuProps {
   isMenuOpen: boolean;
   groups: Array<string>;
   dropDonwHandler: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  menuOpenHandler: () => void;
 }
 
 export interface IFooterProps {

@@ -9,6 +9,16 @@
 }
 @media (max-width: 768px) {
   .search {
-    width: 100%;
+    width: 70%;
+  }
+}
+@media (max-width: 425px) {
+  .search {
+    width: 75%;
+  }
+}
+@media (max-width: 375px) {
+  .search {
+    width: 80%;
   }
 }

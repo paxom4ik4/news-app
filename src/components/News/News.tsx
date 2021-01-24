@@ -38,17 +38,20 @@ const News: React.FC<INewsProps> = ({
   const menuClassName = isMenuOpen
     ? "news-container news-menu-open"
     : "news-container";
+
   return (
-    <div className={menuClassName}>
-      <Jumbotron fluid className={newsClassName}>
-        <Container fluid className="news-container-contens">
-          {activeItems === 0 ? (
-            <p className="no-news">Новостей нет</p>
-          ) : (
-            newsItems
-          )}
-        </Container>
-      </Jumbotron>
+    <div className="news-background">
+      <div className={menuClassName}>
+        <Jumbotron fluid className={newsClassName}>
+          <Container fluid className="news-container-contens">
+            {activeItems === 0 ? (
+              <p className="no-news">Новостей нет</p>
+            ) : (
+              newsItems
+            )}
+          </Container>
+        </Jumbotron>
+      </div>
     </div>
   );
 };

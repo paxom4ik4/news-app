@@ -9,6 +9,8 @@ import {
 import Switch from "react-switch";
 import { IMenuProps } from "../../interfaces/ComponentsProps";
 import "./Menu.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const Menu: React.FC<IMenuProps> = ({
   sortByName,
@@ -18,6 +20,7 @@ const Menu: React.FC<IMenuProps> = ({
   isMenuOpen,
   groups,
   dropDonwHandler,
+  menuOpenHandler,
 }): JSX.Element => {
   const menuClassName = isMenuOpen ? "menu menu-open" : "menu";
   let menuContentClassName = isMenuOpen
@@ -33,14 +36,22 @@ const Menu: React.FC<IMenuProps> = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggle = (): void => setIsOpen((prevState) => !prevState);
 
+  const dropdownToggleClassName = darkMode
+    ? "filter-dropdown-btn filter-btn-dark"
+    : "filter-dropdown-btn";
+
   const filterMenu = (
     <Dropdown isOpen={isOpen} toggle={toggle}>
-      <DropdownToggle>Фильтровать новости</DropdownToggle>
+      <DropdownToggle className={dropdownToggleClassName}>
+        Фильтровать новости
+      </DropdownToggle>
       <DropdownMenu onClick={(e) => dropDonwHandler(e)}>
         {dropDownItems}
       </DropdownMenu>
     </Dropdown>
   );
+
+  const closeIcon = <FontAwesomeIcon icon={faTimes} />;
   return (
     <div className={menuClassName}>
       <Jumbotron className={menuContentClassName}>
@@ -69,6 +80,9 @@ const Menu: React.FC<IMenuProps> = ({
           </div>
         </div>
         <div className="filter-items-btn">{filterMenu}</div>
+        <div className="menu-close-btn" onClick={() => menuOpenHandler()}>
+          {closeIcon}
+        </div>
       </Jumbotron>
     </div>
   );

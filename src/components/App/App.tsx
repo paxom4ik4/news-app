@@ -282,19 +282,16 @@ const App: React.FC = (): JSX.Element => {
 
   return (
     <div className="app">
-      {isMenuOpen ? (
-        <Menu
-          sortByName={sortByName}
-          sortByDate={sortByDate}
-          darkMode={darkMode}
-          darkModeHandler={darkModeHandler}
-          isMenuOpen={isMenuOpen}
-          groups={groups}
-          dropDonwHandler={dropDonwHandler}
-        />
-      ) : (
-        ""
-      )}
+      <Menu
+        sortByName={sortByName}
+        sortByDate={sortByDate}
+        darkMode={darkMode}
+        darkModeHandler={darkModeHandler}
+        isMenuOpen={isMenuOpen}
+        groups={groups}
+        dropDonwHandler={dropDonwHandler}
+        menuOpenHandler={menuOpenHandler}
+      />
       <Header
         darkMode={darkMode}
         searchNews={searchNews}
