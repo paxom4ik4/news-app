@@ -29,13 +29,11 @@
 .no-news {
   position: absolute;
   left: 50%;
-  top: 100%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .news-container {
-  height: 100%;
-  min-height: 100%;
   width: 100%;
   animation: loyalMenuClose 0.4s;
 }
@@ -55,6 +53,17 @@
   transition: 0.3s;
   color: #ffffff;
   background-color: rgb(33, 33, 36);
+}
+
+.news-background {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: fit-content;
+  min-height: 100%;
 }
 
 @keyframes loyalMenuClose {

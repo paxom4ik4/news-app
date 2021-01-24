@@ -26,7 +26,7 @@ const Header: React.FC<IHeaderProps> = ({
     <div className={menuClassName}>
       <Navbar color={navbarClassName} expand="md">
         <NavbarBrand className={navbarBrandClassName}>
-          News
+          <span className="header-title">News</span>
           <button className={menuStyle} onClick={menuOpenHandler}>
             {menuIcon}
           </button>{" "}
