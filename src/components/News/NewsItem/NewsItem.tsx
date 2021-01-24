@@ -18,36 +18,22 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import DeleteModal from "../DeleteModal";
+import { INewsItemProps } from "../../../interfaces/ComponentsProps";
 
-const NewsItem = (props: {
-  title: string;
-  subtitle: string;
-  text: string;
-  imgUrl: string;
-  id: number;
-  group: string;
-  isDeleted: boolean;
-  isActive: boolean;
-  deleteNewsItem: (id: number) => void;
-  onToggleDelete: (id: number) => void;
-  editItem: (
-    id: number,
-    title: string,
-    subtitle: string,
-    text: string,
-    imgUrl: string
-  ) => void;
-}) => {
-  const title = props.title;
-  const subtitle = props.subtitle;
-  const text = props.text;
-  const imgUrl = props.imgUrl;
-  const id = props.id;
-  const deleteNewsItem = props.deleteNewsItem;
-  const onToggleDelete = props.onToggleDelete;
-  const editItem = props.editItem;
-  const isDeleted = props.isDeleted;
-  const isActive = props.isActive;
+const NewsItem: React.FC<INewsItemProps> = ({
+  title,
+  subtitle,
+  text,
+  imgUrl,
+  id,
+  deleteNewsItem,
+  onToggleDelete,
+  editItem,
+  isDeleted,
+  isActive,
+  publishedDate,
+  darkMode,
+}): JSX.Element => {
   const editIcon = <FontAwesomeIcon icon={faEdit} />;
   const deleteIcon = <FontAwesomeIcon icon={faTrash} />;
   const [modal, setModal] = useState<boolean>(false);
@@ -171,6 +157,11 @@ const NewsItem = (props: {
       </Modal>
     </div>
   );
+
+  const cardClassName = darkMode ? "card dark-card" : "card";
+  const cardItemBtnClassName = darkMode
+    ? "card-item-btn-dark"
+    : "card-item-btn";
   return (
     <div
       className={
@@ -181,7 +172,10 @@ const NewsItem = (props: {
           : "news-item-hidden"
       }
     >
-      <Card>
+      <Card className={cardClassName}>
+        <CardText className="cart-item-published-date">
+          {publishedDate}
+        </CardText>
         {imgUrl === "" ? (
           ""
         ) : (
@@ -194,10 +188,16 @@ const NewsItem = (props: {
             {subtitle}
           </CardSubtitle>
           <CardText>{text}</CardText>
-          <Button color="danger" onClick={() => setModal(!modal)}>
+          <Button
+            className={cardItemBtnClassName}
+            onClick={() => setModal(!modal)}
+          >
             {userWidth < 375 ? deleteIcon : <span>Удалить {deleteIcon}</span>}
           </Button>
-          <Button onClick={() => toggleModal()}>
+          <Button
+            className={cardItemBtnClassName}
+            onClick={() => toggleModal()}
+          >
             {userWidth < 375 ? editIcon : <span>Редактировать {editIcon}</span>}
           </Button>
         </CardBody>

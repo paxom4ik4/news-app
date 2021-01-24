@@ -71,3 +71,21 @@
     height: 40px;
   }
 }
+
+.card {
+  transition: 0.3s;
+}
+.dark-card {
+  transition: 0.3s;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.card-body .card-item-btn-dark {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.cart-item-published-date {
+  margin: 15px 0 0px 20px;
+}
