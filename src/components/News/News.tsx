@@ -5,6 +5,8 @@ import NewsItem from "./NewsItem";
 import { INewsProps } from "../../interfaces/ComponentsProps";
 
 const News: React.FC<INewsProps> = ({
+  setNewsItemPageItem,
+  toggleNewsItemPage,
   news,
   deleteNewsItem,
   onToggleDelete,
@@ -15,6 +17,7 @@ const News: React.FC<INewsProps> = ({
   const newsItems: React.ReactFragment[] = news.map((elem, index) => {
     return (
       <NewsItem
+        toggleNewsItemPage={toggleNewsItemPage}
         key={index.toString()}
         title={elem.title}
         subtitle={elem.subtitle}
@@ -29,6 +32,7 @@ const News: React.FC<INewsProps> = ({
         editItem={editItem}
         publishedDate={elem.publishedDate}
         darkMode={darkMode}
+        setNewsItemPageItem={setNewsItemPageItem}
       />
     );
   });

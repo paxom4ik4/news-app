@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Footer.css";
+import "./AddItem.css";
 import {
   Button,
   Modal,
@@ -11,9 +11,9 @@ import {
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
-import { IFooterProps } from "../../interfaces/ComponentsProps";
+import { IAddItemProps } from "../../interfaces/ComponentsProps";
 
-const Footer: React.FC<IFooterProps> = ({
+const AddItem: React.FC<IAddItemProps> = ({
   addNewItem,
   groups,
 }): JSX.Element => {
@@ -78,7 +78,7 @@ const Footer: React.FC<IFooterProps> = ({
         <ModalHeader toggle={toggleModal}>Добавьте что-то новое</ModalHeader>
         <Form>
           <FormGroup>
-            <Label for="newsTitle">Заголовок</Label>
+            <Label for="newsTitle">Заголовок (Обязательно)</Label>
             <Input
               required
               value={newTitle}
@@ -105,7 +105,7 @@ const Footer: React.FC<IFooterProps> = ({
             />
           </FormGroup>
           <FormGroup>
-            <Label for="newsText">Текст</Label>
+            <Label for="newsText">Текст (Обязательно)</Label>
             <Input
               required
               value={newText}
@@ -198,4 +198,4 @@ const Footer: React.FC<IFooterProps> = ({
   return <div className="add-item-btn">{addNew}</div>;
 };
 
-export default Footer;
+export default AddItem;

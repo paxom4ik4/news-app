@@ -1,91 +1,142 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header";
 import INewsItem from "../../interfaces/INews";
 import News from "../News";
-import Footer from "../Footer";
+import AddItem from "../AddItem";
 import { getDate, getDateNumber } from "../../utils/getDate";
 import Menu from "../Menu/Menu";
+import NewsItemPage from "../NewsItemPage";
 
 const App: React.FC = (): JSX.Element => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [news, setNews] = useState<INewsItem[]>([]);
+  let maxId: number = 100;
 
-  let maxId = 100;
+  useEffect(() => {
+    const darkMode = localStorage.getItem("paxom4ik-app-dark-mode");
+    setDarkMode(Boolean(darkMode));
 
-  const [news, setNews] = useState<INewsItem[]>([
-    {
-      title:
-        "Разработчик процессоров Джим Келлер перешел на работу в Tenstorrent",
-      subtitle: "Карьера",
-      text:
-        "Известный разработчик процессоров Джим Келлер спустя полгода после ухода из Intel по семейным обстоятельствам перешел на новую работу в канадский стартап Tenstorrent. Келлер будет совмещать в компании сразу три должности: президента, технического директора и члена совета директоров.",
-      imgUrl:
-        "https://habrastorage.org/webt/cw/9l/_z/cw9l_zw8utkexbajqsumwijdhnc.jpeg",
-      isDeleted: false,
-      group: "IT",
-      isActive: true,
-      id: maxId++,
-      publishedDate: getDate(),
-      publishedDateNumber: getDateNumber(),
-    },
-    {
-      title: "На YouTube полно видео про инвестиции.",
-      subtitle: "Экономика. Образование",
-      text:
-        "На новогодних праздниках можно без зазрения совести уйти в YouTube. Но что там смотреть — выбирать вам. Мы предлагаем совместить приятное с полезным и познакомиться с каналами про инвестиции. Собрали для вас несколько авторов, вместе с которыми сможете погрузиться в мир финансов и торговли. Узнаете, как оценивать компанию и финансовую отчетность, как читать новости и стоит ли это делать вообще. А еще — какие ценные бумаги  покупают аналитики и другие частные инвесторы. Кто-то ведет канал с юмором, а кто-то — максимально серьезно. Выбирайте, что вам ближе по настроению",
-      imgUrl:
-        "https://s0.rbk.ru/v6_top_pics/resized/1200xH/media/img/2/26/755863669219262.png",
-      isDeleted: false,
-      group: "Economy",
-      isActive: true,
-      id: maxId++,
-      publishedDate: getDate(),
-      publishedDateNumber: getDateNumber(),
-    },
-    {
-      title:
-        "НАСА рассказало, как телескоп SPHEREx будет искать признаки Большого взрыва",
-      subtitle: "Научно-популярное",
-      text:
-        "НАСА достигло ключевой вехи в разработке космического телескопа SPHEREx (Spectro-Photometer for the History of the Universe, Epoch of Reionization and Ices Explorer), предназначенного для изучения теории Большого взрыва и происхождения галактик. Миссия вступила в фазу C. Это означает, что НАСА одобрило предварительные проекты обсерватории и может приступить к завершающей фазе проектирования и производства оборудования и программного обеспечения.",
-      imgUrl:
-        "https://habrastorage.org/webt/eh/ag/dh/ehagdhxx-vyvykuwwzvici38m7w.png",
-      isDeleted: false,
-      group: "Science",
-      isActive: true,
-      id: maxId++,
-      publishedDate: getDate(),
-      publishedDateNumber: getDateNumber(),
-    },
-    {
-      title:
-        "Эксперты рассказали, какие криптовалюты сильно вырастут в этом году",
-      subtitle: "Экономика. Криптовалюта",
-      text:
-        "Ethereum за год подорожал на 800 %, сейчас альткоин стоит 1,25 тыс. долларов. График многих криптовалют оказался похож, но остались те, кто за последний год почти не изменился в цене.",
-      imgUrl:
-        "https://avatars.mds.yandex.net/get-ynews/2380313/a160aba0c2406e3ccfef6ef0d50b4222/400x200",
-      isDeleted: false,
-      group: "Economy",
-      isActive: true,
-      id: maxId++,
-      publishedDate: getDate(),
-      publishedDateNumber: getDateNumber(),
-    },
-    {
-      title: "Британский регулятор начал проверять сделку по покупке Arm",
-      subtitle: "Законодательство в IT",
-      text:
-        "Британское Управление по конкуренции и рынкам начало расследование по факту поглощения американской компанией Nvidia британской компании-разработчика микросхем Arm за $40 млрд. Оно призвало заинтересованную стороны представить свои мнения по спорной сделке до начала официального разбирательства.",
-      imgUrl:
-        "https://habrastorage.org/webt/17/9w/g2/179wg2nw2rxfer4ak6hizn-nyim.jpeg",
-      isDeleted: false,
-      group: "IT",
-      isActive: true,
-      id: maxId++,
-      publishedDate: getDate(),
-      publishedDateNumber: getDateNumber(),
-    },
-  ]);
+    const news = JSON.parse(localStorage.getItem("paxom4ik-app-news")!) || [
+      {
+        title:
+          "Разработчик процессоров Джим Келлер перешел на работу в Tenstorrent",
+        subtitle: "Карьера",
+        text:
+          "Известный разработчик процессоров Джим Келлер спустя полгода после ухода из Intel по семейным обстоятельствам перешел на новую работу в канадский стартап Tenstorrent. Келлер будет совмещать в компании сразу три должности: президента, технического директора и члена совета директоров.",
+        imgUrl:
+          "https://habrastorage.org/webt/cw/9l/_z/cw9l_zw8utkexbajqsumwijdhnc.jpeg",
+        isDeleted: false,
+        group: "IT",
+        isActive: true,
+        id: 0,
+        publishedDate: getDate(),
+        publishedDateNumber: getDateNumber(),
+      },
+      {
+        title: "На YouTube полно видео про инвестиции.",
+        subtitle: "Экономика. Образование",
+        text:
+          "На новогодних праздниках можно без зазрения совести уйти в YouTube. Но что там смотреть — выбирать вам. Мы предлагаем совместить приятное с полезным и познакомиться с каналами про инвестиции. Собрали для вас несколько авторов, вместе с которыми сможете погрузиться в мир финансов и торговли. Узнаете, как оценивать компанию и финансовую отчетность, как читать новости и стоит ли это делать вообще. А еще — какие ценные бумаги  покупают аналитики и другие частные инвесторы. Кто-то ведет канал с юмором, а кто-то — максимально серьезно. Выбирайте, что вам ближе по настроению",
+        imgUrl:
+          "https://s0.rbk.ru/v6_top_pics/resized/1200xH/media/img/2/26/755863669219262.png",
+        isDeleted: false,
+        group: "Economy",
+        isActive: true,
+        id: 1,
+        publishedDate: getDate(),
+        publishedDateNumber: getDateNumber(),
+      },
+      {
+        title:
+          "НАСА рассказало, как телескоп SPHEREx будет искать признаки Большого взрыва",
+        subtitle: "Научно-популярное",
+        text:
+          "НАСА достигло ключевой вехи в разработке космического телескопа SPHEREx (Spectro-Photometer for the History of the Universe, Epoch of Reionization and Ices Explorer), предназначенного для изучения теории Большого взрыва и происхождения галактик. Миссия вступила в фазу C. Это означает, что НАСА одобрило предварительные проекты обсерватории и может приступить к завершающей фазе проектирования и производства оборудования и программного обеспечения.",
+        imgUrl:
+          "https://habrastorage.org/webt/eh/ag/dh/ehagdhxx-vyvykuwwzvici38m7w.png",
+        isDeleted: false,
+        group: "Science",
+        isActive: true,
+        id: 2,
+        publishedDate: getDate(),
+        publishedDateNumber: getDateNumber(),
+      },
+      {
+        title:
+          "Эксперты рассказали, какие криптовалюты сильно вырастут в этом году",
+        subtitle: "Экономика. Криптовалюта",
+        text:
+          "Ethereum за год подорожал на 800 %, сейчас альткоин стоит 1,25 тыс. долларов. График многих криптовалют оказался похож, но остались те, кто за последний год почти не изменился в цене.",
+        imgUrl:
+          "https://avatars.mds.yandex.net/get-ynews/2380313/a160aba0c2406e3ccfef6ef0d50b4222/400x200",
+        isDeleted: false,
+        group: "Economy",
+        isActive: true,
+        id: 3,
+        publishedDate: getDate(),
+        publishedDateNumber: getDateNumber(),
+      },
+      {
+        title: "Британский регулятор начал проверять сделку по покупке Arm",
+        subtitle: "Законодательство в IT",
+        text:
+          "Британское Управление по конкуренции и рынкам начало расследование по факту поглощения американской компанией Nvidia британской компании-разработчика микросхем Arm за $40 млрд. Оно призвало заинтересованную стороны представить свои мнения по спорной сделке до начала официального разбирательства.",
+        imgUrl:
+          "https://habrastorage.org/webt/17/9w/g2/179wg2nw2rxfer4ak6hizn-nyim.jpeg",
+        isDeleted: false,
+        group: "IT",
+        isActive: true,
+        id: 4,
+        publishedDate: getDate(),
+        publishedDateNumber: getDateNumber(),
+      },
+    ];
+    setNews(news);
+  }, []);
+
+  useEffect(() => {
+    const saveNewsToLocal = (): void => {
+      localStorage.setItem("paxom4ik-app-news", JSON.stringify(news));
+    };
+    saveNewsToLocal();
+  }, [news]);
+
+  useEffect(() => {
+    const setDarkModeToLocal = (): void => {
+      darkMode
+        ? localStorage.setItem("paxom4ik-app-dark-mode", "dark")
+        : localStorage.setItem("paxom4ik-app-dark-mode", "");
+    };
+    setDarkModeToLocal();
+  }, [darkMode]);
+
+  const [isNewsItemPage, toggleNewsItemPage] = useState<boolean>(false);
+  const [newsItemPageItem, setNewsItemPageItem] = useState<INewsItem>({
+    title:
+      "Разработчик процессоров Джим Келлер перешел на работу в Tenstorrent",
+    subtitle: "Карьера",
+    text:
+      "Известный разработчик процессоров Джим Келлер спустя полгода после ухода из Intel по семейным обстоятельствам перешел на новую работу в канадский стартап Tenstorrent. Келлер будет совмещать в компании сразу три должности: президента, технического директора и члена совета директоров.",
+    imgUrl:
+      "https://habrastorage.org/webt/cw/9l/_z/cw9l_zw8utkexbajqsumwijdhnc.jpeg",
+    isDeleted: false,
+    group: "IT",
+    isActive: true,
+    id: 0,
+    publishedDate: getDate(),
+    publishedDateNumber: getDateNumber(),
+  });
+
+  const toggleNewsItemPageHandler = () => {
+    toggleNewsItemPage(!isNewsItemPage);
+  };
+
+  const setNewsItemPageHandler = (id: number) => {
+    const currentItemIdx: number = news.findIndex((el) => el.id === id);
+    const currentNews = news[currentItemIdx];
+    console.log(currentNews);
+    setNewsItemPageItem(currentNews);
+  };
 
   const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
   const [groups, setGroups] = useState<Array<string>>([
@@ -299,14 +350,22 @@ const App: React.FC = (): JSX.Element => {
         menuOpenHandler={menuOpenHandler}
       />
       <News
+        toggleNewsItemPage={toggleNewsItemPageHandler}
         darkMode={darkMode}
         isMenuOpen={isMenuOpen}
         news={news}
         deleteNewsItem={deleteNewsItem}
         onToggleDelete={onToggleDelete}
         editItem={editItem}
+        setNewsItemPageItem={setNewsItemPageHandler}
       />
-      <Footer addNewItem={addNewItem} groups={groups} />
+      <NewsItemPage
+        darkMode={darkMode}
+        isNewsItemPage={isNewsItemPage}
+        news={newsItemPageItem!}
+        toggleNewsItemPage={toggleNewsItemPageHandler}
+      />
+      <AddItem addNewItem={addNewItem} groups={groups} />
     </div>
   );
 };
