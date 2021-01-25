@@ -22,7 +22,7 @@ export interface IMenuProps {
   menuOpenHandler: () => void;
 }
 
-export interface IFooterProps {
+export interface IAddItemProps {
   addNewItem: (
     title: string,
     subtitle: string,
@@ -35,6 +35,8 @@ export interface IFooterProps {
 }
 
 export interface INewsProps {
+  setNewsItemPageItem: (id: number) => void;
+  toggleNewsItemPage: () => void;
   news: INewsItem[];
   deleteNewsItem: (id: number) => void;
   onToggleDelete: (id: number) => void;
@@ -50,6 +52,7 @@ export interface INewsProps {
 }
 
 export interface INewsItemProps {
+  toggleNewsItemPage: () => void;
   title: string;
   subtitle: string;
   text: string;
@@ -69,6 +72,7 @@ export interface INewsItemProps {
     imgUrl: string
   ) => void;
   darkMode: boolean;
+  setNewsItemPageItem: (id: number) => void;
 }
 
 export interface IDeleteModalProps {
@@ -77,4 +81,11 @@ export interface IDeleteModalProps {
   deleteNewsItem: (id: number) => void;
   onToggleDelete: (id: number) => void;
   id: number;
+}
+
+export interface INewsItemPageProps {
+  darkMode: boolean;
+  toggleNewsItemPage: () => void;
+  isNewsItemPage: boolean;
+  news: INewsItem;
 }

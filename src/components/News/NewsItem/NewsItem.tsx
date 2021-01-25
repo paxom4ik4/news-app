@@ -21,6 +21,7 @@ import DeleteModal from "../DeleteModal";
 import { INewsItemProps } from "../../../interfaces/ComponentsProps";
 
 const NewsItem: React.FC<INewsItemProps> = ({
+  toggleNewsItemPage,
   title,
   subtitle,
   text,
@@ -33,6 +34,7 @@ const NewsItem: React.FC<INewsItemProps> = ({
   isActive,
   publishedDate,
   darkMode,
+  setNewsItemPageItem,
 }): JSX.Element => {
   const editIcon = <FontAwesomeIcon icon={faEdit} />;
   const deleteIcon = <FontAwesomeIcon icon={faTrash} />;
@@ -173,16 +175,16 @@ const NewsItem: React.FC<INewsItemProps> = ({
       }
     >
       <Card className={cardClassName}>
-        <CardText className="cart-item-published-date">
-          {publishedDate}
-        </CardText>
-        {imgUrl === "" ? (
-          ""
-        ) : (
-          <CardImg top width="100%" src={imgUrl} alt="Card image cap" />
-        )}
-
         <CardBody>
+          <CardText className="cart-item-published-date">
+            {publishedDate}
+          </CardText>
+          {imgUrl === "" ? (
+            ""
+          ) : (
+            <CardImg top width="100%" src={imgUrl} alt="Card image cap" />
+          )}
+
           <CardTitle tag="h5">{title}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
             {subtitle}
@@ -192,14 +194,24 @@ const NewsItem: React.FC<INewsItemProps> = ({
             className={cardItemBtnClassName}
             onClick={() => setModal(!modal)}
           >
-            {userWidth < 375 ? deleteIcon : <span>Удалить {deleteIcon}</span>}
+            {userWidth < 425 ? deleteIcon : <span>Удалить {deleteIcon}</span>}
           </Button>
           <Button
             className={cardItemBtnClassName}
             onClick={() => toggleModal()}
           >
-            {userWidth < 375 ? editIcon : <span>Редактировать {editIcon}</span>}
+            {userWidth < 425 ? editIcon : <span>Редактировать {editIcon}</span>}
           </Button>
+          <span
+            className="news-item-full"
+            id={id.toString()}
+            onClick={() => {
+              setNewsItemPageItem (id);
+              toggleNewsItemPage();
+            }}
+          >
+            Read Full
+          </span>
         </CardBody>
       </Card>
       <DeleteModal

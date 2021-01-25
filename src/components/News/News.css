@@ -134,7 +134,7 @@
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   .container-fluid {
     grid-template-columns: 100%;
   }

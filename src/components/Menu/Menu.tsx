@@ -40,12 +40,18 @@ const Menu: React.FC<IMenuProps> = ({
     ? "filter-dropdown-btn filter-btn-dark"
     : "filter-dropdown-btn";
 
+  const dropdownMenuClassName = darkMode
+    ? "dropdown-menu-dark"
+    : "dropdown-menu";
   const filterMenu = (
     <Dropdown isOpen={isOpen} toggle={toggle}>
       <DropdownToggle className={dropdownToggleClassName}>
         Фильтровать новости
       </DropdownToggle>
-      <DropdownMenu onClick={(e) => dropDonwHandler(e)}>
+      <DropdownMenu
+        onClick={(e) => dropDonwHandler(e)}
+        className={dropdownMenuClassName}
+      >
         {dropDownItems}
       </DropdownMenu>
     </Dropdown>

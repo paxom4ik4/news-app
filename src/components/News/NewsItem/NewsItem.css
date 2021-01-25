@@ -13,7 +13,7 @@
 }
 
 .news-item .card .card-img-top {
-  padding: 15px;
+  padding: 10px;
 }
 
 .card-body .btn {
@@ -45,6 +45,17 @@
   margin-top: 20px;
   max-height: 280px;
   overflow-y: scroll;
+}
+
+.news-item-full {
+  position: absolute;
+  bottom: 30px;
+  right: 20px;
+  transition: 0.3s;
+}
+.news-item-full:hover {
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 @media (max-width: 1200px) {
@@ -84,8 +95,4 @@
 .card-body .card-item-btn-dark {
   border-color: #ffffff;
   color: #ffffff;
-}
-
-.cart-item-published-date {
-  margin: 15px 0 0px 20px;
 }

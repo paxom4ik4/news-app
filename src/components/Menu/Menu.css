@@ -113,6 +113,30 @@
   display: none;
 }
 
+.dropdown-item {
+  background-color: none;
+  background: none;
+}
+
+.dropdown {
+  width: 100%;
+}
+
+.dropdown-menu-dark {
+  background-color: rgb(33, 33, 36);
+}
+.dropdown-menu-dark > button {
+  color: #ffffff;
+}
+.dropdown-menu-dark > button:hover {
+  color: #ffffff;
+  background-color: black;
+}
+
+.dropdown-menu {
+  width: 100%;
+}
+
 @keyframes menuLoyal {
   0% {
     left: -20%;
@@ -214,6 +238,12 @@
 }
 
 @media (max-width: 600px) {
+  .menu-close-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    display: initial;
+  }
   .menu {
     left: -60%;
     width: 60%;
@@ -244,13 +274,6 @@
 }
 
 @media (max-width: 425px) {
-  .menu-close-btn {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    display: initial;
-  }
-
   .menu {
     left: -100%;
     width: 100%;
