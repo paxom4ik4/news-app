@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import "./AddItem.css";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-} from "reactstrap";
+import { Modal, ModalHeader, Form, Label } from "reactstrap";
+import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { IAddItemProps } from "../../interfaces/ComponentsProps";
@@ -27,40 +20,40 @@ const AddItem: React.FC<IAddItemProps> = ({
   const [newUrl, setNewUrl] = useState<string>("");
   const [newsGroupNew, setNewsGroupNew] = useState<string>("");
 
-  const newTitleHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
-    e: React.FormEvent<HTMLInputElement>
-  ) => {
-    const value = e.currentTarget.value;
+  const newTitleHandler: (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => void = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = event.currentTarget.value;
     setNewTitle(value);
   };
-  const newSubtitleHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
-    e: React.FormEvent<HTMLInputElement>
-  ) => {
-    const value = e.currentTarget.value;
+  const newSubtitleHandler: (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => void = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = event.currentTarget.value;
     setNewSubtitle(value);
   };
-  const newTextHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
-    e: React.FormEvent<HTMLInputElement>
-  ) => {
-    const value = e.currentTarget.value;
+  const newTextHandler: (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => void = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = event.currentTarget.value;
     setNewText(value);
   };
-  const newGroupHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
-    e: React.FormEvent<HTMLInputElement>
-  ) => {
-    const value = e.currentTarget.value;
+  const newGroupHandler: (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => void = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = event.currentTarget.value;
     setNewGroup(value);
   };
-  const newUrlHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
-    e: React.FormEvent<HTMLInputElement>
-  ) => {
-    const value = e.currentTarget.value;
+  const newUrlHandler: (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => void = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = event.currentTarget.value;
     setNewUrl(value);
   };
-  const newGroupNewsHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
-    e: React.FormEvent<HTMLInputElement>
-  ) => {
-    const value = e.currentTarget.value;
+  const newGroupNewsHandler: (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => void = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = event.currentTarget.value;
     setNewsGroupNew(value);
   };
 
@@ -76,92 +69,94 @@ const AddItem: React.FC<IAddItemProps> = ({
       </Button>
       <Modal isOpen={modal} toggle={toggleModal} className="new-item-modal">
         <ModalHeader toggle={toggleModal}>Добавьте что-то новое</ModalHeader>
-        <Form>
-          <FormGroup>
+        <Form className="add-item-form">
+          <InputGroup>
             <Label for="newsTitle">Заголовок (Обязательно)</Label>
-            <Input
+            <FormControl
               required
               value={newTitle}
               type="text"
               name="title"
               id="newsTitle"
               placeholder="Title"
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                newTitleHandler(e)
+              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                newTitleHandler(event)
               }
             />
-          </FormGroup>
-          <FormGroup>
+          </InputGroup>
+          <InputGroup>
             <Label for="newsSubtitle">Подзаголовок</Label>
-            <Input
+            <FormControl
               value={newSubtitle}
               type="text"
               name="text"
               id="newsSubtitle"
               placeholder="Subtitle"
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                newSubtitleHandler(e)
+              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                newSubtitleHandler(event)
               }
             />
-          </FormGroup>
-          <FormGroup>
+          </InputGroup>
+          <InputGroup>
             <Label for="newsText">Текст (Обязательно)</Label>
-            <Input
+            <FormControl
               required
               value={newText}
-              type="textarea"
+              as="textarea"
               name="text"
               id="newsText"
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                newTextHandler(e)
+              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                newTextHandler(event)
               }
             />
-          </FormGroup>
-          <FormGroup>
+          </InputGroup>
+          <InputGroup>
             <Label for="newsGroup">Категория</Label>
-            <Input
-              type="select"
+            <FormControl
+              as="select"
               name="group"
               id="newsGroup"
               value={newGroup}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                newGroupHandler(e)
+              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                newGroupHandler(event)
               }
             >
               {groups.map((elem, id) => {
                 return <option key={id}>{elem}</option>;
               })}
-            </Input>
-          </FormGroup>
-          <FormGroup>
+            </FormControl>
+          </InputGroup>
+          <InputGroup>
             <Label for="newsGroupNew">Или добавьте свою категорию</Label>
-            <Input
+            <FormControl
               type="text"
               name="newGroup"
               id="newsGroupNew"
               value={newsGroupNew}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                newGroupNewsHandler(e)
+              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                newGroupNewsHandler(event)
               }
-            ></Input>
-          </FormGroup>
-          <FormGroup>
+            />
+          </InputGroup>
+          <InputGroup>
             <Label for="newsUrl">URL Изображения</Label>
-            <Input
+            <FormControl
               value={newUrl}
               type="text"
               name="imgUrl"
               id="newsUrl"
               placeholder="Image url"
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                newUrlHandler(e)
+              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                newUrlHandler(event)
               }
             />
-          </FormGroup>
+          </InputGroup>
           <Button
             type="submit"
-            onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-              e.preventDefault();
+            onClick={(
+              event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+            ) => {
+              event.preventDefault();
               if (newTitle === "" || newText === "") {
                 setNewError(true);
               } else {
@@ -199,3 +194,4 @@ const AddItem: React.FC<IAddItemProps> = ({
 };
 
 export default AddItem;
+  

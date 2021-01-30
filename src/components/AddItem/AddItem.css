@@ -24,6 +24,22 @@
   resize: none;
 }
 
+.add-item-form .input-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.add-item-form .input-group input {
+  width: 100% !important;
+}
+.add-item-form .form-control {
+  width: 100% !important;
+}
+
+.add-item-form .btn {
+  margin-top: 20px;
+}
+
 @media (max-width: 1200px) {
   .modal-content {
     position: absolute;
