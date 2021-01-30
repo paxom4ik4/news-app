@@ -7,14 +7,13 @@ import {
   CardBody,
   CardTitle,
   CardSubtitle,
-  Button,
   Modal,
   ModalHeader,
   Form,
   FormGroup,
   Label,
-  Input,
 } from "reactstrap";
+import { Button, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import DeleteModal from "../DeleteModal";
@@ -50,26 +49,26 @@ const NewsItem: React.FC<INewsItemProps> = ({
   const [editText, setEditText] = useState<string>(text);
   const [editUrl, setEditUrl] = useState<string>(imgUrl);
 
-  const editTitleHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
-    e: React.FormEvent<HTMLInputElement>
+  const editTitleHandler: (e: React.ChangeEvent<HTMLInputElement>) => void = (
+    e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.currentTarget.value;
     setEditTitle(value);
   };
-  const editSubtitleHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
-    e: React.FormEvent<HTMLInputElement>
-  ) => {
+  const editSubtitleHandler: (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => void = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
     setEditSubtitle(value);
   };
-  const editTextHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
-    e: React.FormEvent<HTMLInputElement>
+  const editTextHandler: (e: React.ChangeEvent<HTMLInputElement>) => void = (
+    e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.currentTarget.value;
     setEditText(value);
   };
-  const editUrlHandler: (e: React.FormEvent<HTMLInputElement>) => void = (
-    e: React.FormEvent<HTMLInputElement>
+  const editUrlHandler: (e: React.ChangeEvent<HTMLInputElement>) => void = (
+    e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.currentTarget.value;
     setEditUrl(value);
@@ -84,53 +83,53 @@ const NewsItem: React.FC<INewsItemProps> = ({
         <Form>
           <FormGroup>
             <Label for="newsTitle">Заголовок</Label>
-            <Input
+            <FormControl
               required
               value={editTitle}
               type="text"
               name="title"
               id="newsTitle"
               placeholder="Title"
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 editTitleHandler(e)
               }
             />
           </FormGroup>
           <FormGroup>
             <Label for="newsSubtitle">Подзаголовок</Label>
-            <Input
+            <FormControl
               value={editSubtitle}
               type="text"
               name="text"
               id="newsSubtitle"
               placeholder="Subtitle"
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 editSubtitleHandler(e)
               }
             />
           </FormGroup>
           <FormGroup>
             <Label for="newsText">Текст</Label>
-            <Input
+            <FormControl
               required
               value={editText}
-              type="textarea"
+              as="textarea"
               name="text"
               id="newsText"
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 editTextHandler(e)
               }
             />
           </FormGroup>
           <FormGroup>
             <Label for="newsUrl">URL Изображения</Label>
-            <Input
+            <FormControl
               value={editUrl}
               type="text"
               name="imgUrl"
               id="newsUrl"
               placeholder="Image url"
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 editUrlHandler(e)
               }
             />
@@ -206,11 +205,11 @@ const NewsItem: React.FC<INewsItemProps> = ({
             className="news-item-full"
             id={id.toString()}
             onClick={() => {
-              setNewsItemPageItem (id);
+              setNewsItemPageItem(id);
               toggleNewsItemPage();
             }}
           >
-            Read Full
+            Читать далее
           </span>
         </CardBody>
       </Card>

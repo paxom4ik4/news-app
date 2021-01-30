@@ -11,7 +11,6 @@ const NewsItemPage: React.FC<INewsItemPageProps> = ({
   isNewsItemPage,
   news,
 }) => {
-  console.log(isNewsItemPage);
   let newsItemPageClassName = isNewsItemPage
     ? "news-item-page news-item-page-open"
     : "news-item-page";
@@ -19,17 +18,31 @@ const NewsItemPage: React.FC<INewsItemPageProps> = ({
     ? `${newsItemPageClassName} item-news-page-dark`
     : newsItemPageClassName;
   const backIcon = <FontAwesomeIcon icon={faArrowRight} />;
+
+  const newsItemPageTextContentClassName = darkMode
+    ? "news-item-page-text-content-dark"
+    : "news-item-page-text-content";
+  const newsItemPageHeaderClassName = darkMode
+    ? "news-item-page-header-dark"
+    : "news-item-page-header";
+  const newsItemPageImgClassName = darkMode
+    ? "news-item-page-img news-item-page-img-dark"
+    : "news-item-page-img";
   return (
     <Jumbotron className={newsItemPageClassName}>
-      <div className="news-item-page-header">
+      <img
+        src={news.imgUrl}
+        className={newsItemPageImgClassName}
+        alt="news"
+      ></img>
+      <div className={newsItemPageHeaderClassName}>
         <h1 className="news-item-page-heading">{news.title}</h1>
         <div className="back-icon" onClick={() => toggleNewsItemPage()}>
           {backIcon}
         </div>
       </div>
 
-      <div className="news-item-page-text-content">
-        <img src={news.imgUrl} className="news-item-page-img" alt="news"></img>
+      <div className={newsItemPageTextContentClassName}>
         <div className="news-item-page-text">
           <p>{news.subtitle}</p>
           <p className="news-item-page-txt">{news.text}</p>
