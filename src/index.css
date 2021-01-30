@@ -16,26 +16,12 @@ html {
   animation: startApp 0.8s;
 }
 
-input,
-input:before,
-input:after {
+input, input:before, input:after {
   -webkit-user-select: initial;
   -khtml-user-select: initial;
   -moz-user-select: initial;
   -ms-user-select: initial;
   user-select: initial;
-}
-
-textarea,
-textarea:before,
-textarea:after {
-  -webkit-user-select: initial;
-  -khtml-user-select: initial;
-  -moz-user-select: initial;
-  -ms-user-select: initial;
-  -webkit-touch-callout: text;
-  -webkit-user-select: text;
-  user-select: text;
 }
 
 @keyframes startApp {
