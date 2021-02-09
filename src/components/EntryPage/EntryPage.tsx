@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./EntryPage.css";
 import { User } from "../../data/users";
-import { InputGroup, Label, Input, Alert } from "reactstrap";
+import { InputGroup, Label, Input, Alert, Form } from "reactstrap";
 import { v4 as uuidv4 } from "uuid";
 import { IEntryPageProps } from "../../interfaces/ComponentsProps";
 import { setTimeout } from "timers";
@@ -69,12 +69,13 @@ const EntryPage: React.FC<IEntryPageProps> = ({
       "entry-page-background entry-page-background-close"
     );
   };
-
   const registrationHandler = (
+    event: React.MouseEvent<HTMLInputElement, MouseEvent>,
     email: string,
     username: string,
     password: string
   ) => {
+    event.preventDefault();
     if (email && username && password) {
       users.forEach((user) => {
         if (user.username === username || user.email === email) {
@@ -170,42 +171,47 @@ const EntryPage: React.FC<IEntryPageProps> = ({
 
   const registrationContent = (
     <>
-      <InputGroup>
-        <Label for="username">Ваше имя пользователя</Label>
-        <Input
-          placeholder="Username"
-          id="username"
-          value={username}
-          onChange={(e) => usernameHandler(e)}
-        />
-      </InputGroup>
-      <InputGroup>
-        <Label for="email">Ваш E-mail</Label>
-        <Input
-          placeholder="E-mail"
-          id="email"
-          value={email}
-          onChange={(e) => emailHandler(e)}
-        />
-      </InputGroup>
-      <InputGroup>
-        <Label for="password">Ваш пароль</Label>
-        <Input
-          placeholder="Password"
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => passwordHandler(e)}
-        />
-      </InputGroup>
-      <br />
-      <InputGroup className="entry-btn">
-        <Input
-          type="submit"
-          value="Зарегистрироваться"
-          onClick={() => registrationHandler(email, username, password)}
-        />
-      </InputGroup>
+      <Form>
+        <InputGroup>
+          <Label for="username">Ваше имя пользователя</Label>
+          <Input
+            placeholder="Username"
+            id="username"
+            value={username}
+            onChange={(e) => usernameHandler(e)}
+          />
+        </InputGroup>
+        <InputGroup>
+          <Label for="email">Ваш E-mail</Label>
+          <Input
+            type="email"
+            placeholder="E-mail"
+            id="email"
+            value={email}
+            onChange={(e) => emailHandler(e)}
+          />
+        </InputGroup>
+        <InputGroup>
+          <Label for="password">Ваш пароль</Label>
+          <Input
+            placeholder="Password"
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => passwordHandler(e)}
+          />
+        </InputGroup>
+        <br />
+        <InputGroup className="entry-btn">
+          <Input
+            type="submit"
+            value="Зарегистрироваться"
+            onClick={(event) =>
+              registrationHandler(event, email, username, password)
+            }
+          />
+        </InputGroup>
+      </Form>
     </>
   );
   return (
