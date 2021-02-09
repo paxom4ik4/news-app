@@ -66,6 +66,21 @@
   min-height: 100%;
 }
 
+.authorize-from-likes {
+  text-decoration: underline;
+}
+.authorize-from-likes:hover {
+  cursor: pointer;
+}
+
+.alert-guest-likes {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
 @keyframes loyalMenuClose {
   0% {
     margin-left: 20%;
@@ -137,5 +152,12 @@
 @media (max-width: 900px) {
   .container-fluid {
     grid-template-columns: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .alert-guest-likes {
+    top: 10%;
+    width: 95%;
   }
 }

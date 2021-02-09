@@ -85,6 +85,7 @@
 
 .card {
   transition: 0.3s;
+  background-color: #ffffff;
 }
 .dark-card {
   transition: 0.3s;
@@ -95,4 +96,31 @@
 .card-body .card-item-btn-dark {
   border-color: #ffffff;
   color: #ffffff;
+}
+
+.card-header {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  transition: 0.3s;
+}
+
+.dark-card .card-header {
+  background-color: #000000;
+  transition: 0.3s;
+}
+
+.star-btn:hover {
+  cursor: pointer;
+}
+
+.star-btn-active {
+  color: rgb(255, 111, 0);
+}
+
+.close-btn-on-liked {
+  cursor: pointer;
 }
