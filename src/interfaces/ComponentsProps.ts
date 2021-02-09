@@ -1,4 +1,5 @@
 import INewsItem from "./INews";
+import { IUser } from "./IUser";
 
 export interface IHeaderProps {
   darkMode: boolean;
@@ -12,6 +13,11 @@ export interface ISearchProps {
 }
 
 export interface IMenuProps {
+  news: INewsItem[];
+  isLogged: boolean;
+  setGuestHandler: () => void;
+  setLoggedHandler: () => void;
+  currentUser: IUser;
   sortByName: () => void;
   sortByDate: () => void;
   darkMode: boolean;
@@ -19,6 +25,7 @@ export interface IMenuProps {
   isMenuOpen: boolean;
   groups: Array<string>;
   dropDonwHandler: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  authorsHandler: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   menuOpenHandler: () => void;
 }
 
@@ -29,12 +36,20 @@ export interface IAddItemProps {
     text: string,
     group: string,
     newGroup: string,
-    url: string
+    url: string,
+    author: string
   ) => void;
   groups: Array<string>;
 }
 
 export interface INewsProps {
+  setGuestHandler: () => void;
+  isGuest: boolean;
+  removeFromLiked: (id: number) => void;
+  guestToLike: boolean;
+  showLikes: boolean;
+  setToLikedNews: (id: number) => void;
+  likedByCurrentUser: INewsItem[];
   setNewsItemPageItem: (id: number) => void;
   toggleNewsItemPage: () => void;
   news: INewsItem[];
@@ -52,11 +67,17 @@ export interface INewsProps {
 }
 
 export interface INewsItemProps {
+  removeFromLiked: (id: number) => void;
+  showLikes: boolean;
+  isHidenByAuthor: boolean;
+  setToLikedNews: (id: number) => void;
   toggleNewsItemPage: () => void;
   title: string;
   subtitle: string;
+  isLiked: boolean;
   text: string;
   imgUrl: string;
+  author: string;
   id: number;
   group: string;
   isDeleted: boolean;
@@ -88,4 +109,12 @@ export interface INewsItemPageProps {
   toggleNewsItemPage: () => void;
   isNewsItemPage: boolean;
   news: INewsItem;
+}
+
+export interface IEntryPageProps {
+  setMenuOpen: () => void;
+  users: IUser[];
+  setCurrentUser: (user: IUser) => void;
+  setGuestHandler: () => void;
+  setLoggedHandler: () => void;
 }

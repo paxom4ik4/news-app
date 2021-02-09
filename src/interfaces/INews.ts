@@ -1,4 +1,5 @@
 export default interface INewsItem {
+  isHidenByAuthor: boolean;
   title: string;
   subtitle: string;
   text: string;
@@ -9,4 +10,5 @@ export default interface INewsItem {
   id: number;
   publishedDate: string;
   publishedDateNumber: string;
+  author: string;
 }

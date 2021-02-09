@@ -1,0 +1,116 @@
+.entry-page-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  z-index: 19;
+}
+.entry-page-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(233, 236, 239);
+  color: #000;
+  z-index: 20;
+}
+
+.login-registration-field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  height: 100%;
+  border-right: 3px solid rgba(255, 255, 255, 0.501);
+}
+
+.login-registration-content {
+  width: 40%;
+  height: 50%;
+}
+
+.login-registration-header {
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  padding: 15px 0;
+}
+.login-registration-header span {
+  font-size: 1.5em;
+  margin-right: 20px;
+  transition: 0.3s;
+}
+.login-registration-header span:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+
+.selected-entry-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.selected-entry-content .input-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.selected-entry-content .entry-btn {
+  width: 35%;
+  align-self: flex-end;
+}
+
+.selected-entry-content .form-control {
+  width: 100%;
+}
+
+.active-entry-page-label {
+  border-bottom: 1px solid rgb(49, 49, 49);
+}
+
+.entry-as-guest-btn {
+  margin-top: 10px;
+}
+
+.entry-as-guest-btn:hover {
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .login-registration-field {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .selected-entry-content .entry-btn {
+    width: 50%;
+  }
+  .login-registration-content {
+    width: 65%;
+  }
+}
+
+@media (max-width: 500px) {
+  .login-registration-content {
+    padding: 0 20px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 375px) {
+  .selected-entry-content .entry-btn {
+    width: 70%;
+  }
+  .login-registration-content {
+    font-size: 0.8em;
+    padding: 0 20px;
+    width: 100%;
+  }
+}

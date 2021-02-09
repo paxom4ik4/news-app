@@ -12,20 +12,31 @@ import {
   Form,
   FormGroup,
   Label,
+  Button,
+  Input,
 } from "reactstrap";
-import { Button, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEdit,
+  faStar,
+  faTrash,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import DeleteModal from "../DeleteModal";
 import { INewsItemProps } from "../../../interfaces/ComponentsProps";
 
 const NewsItem: React.FC<INewsItemProps> = ({
+  removeFromLiked,
+  showLikes,
+  setToLikedNews,
   toggleNewsItemPage,
   title,
+  isLiked,
   subtitle,
   text,
   imgUrl,
   id,
+  author,
   deleteNewsItem,
   onToggleDelete,
   editItem,
@@ -34,16 +45,16 @@ const NewsItem: React.FC<INewsItemProps> = ({
   publishedDate,
   darkMode,
   setNewsItemPageItem,
+  isHidenByAuthor,
 }): JSX.Element => {
   const editIcon = <FontAwesomeIcon icon={faEdit} />;
   const deleteIcon = <FontAwesomeIcon icon={faTrash} />;
+  const starIcon = <FontAwesomeIcon icon={faStar} />;
+  const closeIcon = <FontAwesomeIcon icon={faTimes} />;
   const [modal, setModal] = useState<boolean>(false);
-
   const userWidth: number = window.innerWidth;
-
   const [editModal, setEditModal] = useState<boolean>(false);
   const toggleModal: () => void = () => setEditModal(!editModal);
-
   const [editTitle, setEditTitle] = useState<string>(title);
   const [editSubtitle, setEditSubtitle] = useState<string>(subtitle);
   const [editText, setEditText] = useState<string>(text);
@@ -83,7 +94,7 @@ const NewsItem: React.FC<INewsItemProps> = ({
         <Form>
           <FormGroup>
             <Label for="newsTitle">Заголовок</Label>
-            <FormControl
+            <Input
               required
               value={editTitle}
               type="text"
@@ -97,7 +108,7 @@ const NewsItem: React.FC<INewsItemProps> = ({
           </FormGroup>
           <FormGroup>
             <Label for="newsSubtitle">Подзаголовок</Label>
-            <FormControl
+            <Input
               value={editSubtitle}
               type="text"
               name="text"
@@ -110,10 +121,10 @@ const NewsItem: React.FC<INewsItemProps> = ({
           </FormGroup>
           <FormGroup>
             <Label for="newsText">Текст</Label>
-            <FormControl
+            <Input
               required
               value={editText}
-              as="textarea"
+              type="textarea"
               name="text"
               id="newsText"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -123,7 +134,7 @@ const NewsItem: React.FC<INewsItemProps> = ({
           </FormGroup>
           <FormGroup>
             <Label for="newsUrl">URL Изображения</Label>
-            <FormControl
+            <Input
               value={editUrl}
               type="text"
               name="imgUrl"
@@ -163,21 +174,47 @@ const NewsItem: React.FC<INewsItemProps> = ({
   const cardItemBtnClassName = darkMode
     ? "card-item-btn-dark"
     : "card-item-btn";
+
+  const likedClass = isLiked ? "star-btn star-btn-active" : "star-btn";
+
+  let cardItemClassName = isDeleted
+    ? "news-item news-item-deleted"
+    : isActive
+    ? "news-item"
+    : "news-item-hidden";
+
+  cardItemClassName = isHidenByAuthor ? "news-item-hidden" : cardItemClassName;
+
+  cardItemClassName = showLikes
+    ? isLiked
+      ? cardItemClassName
+      : "news-item-hidden"
+    : cardItemClassName;
+
   return (
-    <div
-      className={
-        isDeleted
-          ? "news-item news-item-deleted"
-          : isActive
-          ? "news-item"
-          : "news-item-hidden"
-      }
-    >
+    <div className={cardItemClassName}>
       <Card className={cardClassName}>
         <CardBody>
-          <CardText className="cart-item-published-date">
-            {publishedDate}
-          </CardText>
+          <div className="card-header">
+            <CardText className="cart-item-published-date">
+              {publishedDate}
+            </CardText>
+            {showLikes ? (
+              <div id={id.toString()} onClick={() => removeFromLiked(id)} className="close-btn-on-liked">
+                {closeIcon}
+              </div>
+            ) : (
+              <div
+                className={likedClass}
+                id={id.toString()}
+                onClick={() => {
+                  setToLikedNews(id);
+                }}
+              >
+                {starIcon}
+              </div>
+            )}
+          </div>
           {imgUrl === "" ? (
             ""
           ) : (
@@ -187,6 +224,9 @@ const NewsItem: React.FC<INewsItemProps> = ({
           <CardTitle tag="h5">{title}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
             {subtitle}
+          </CardSubtitle>
+          <CardSubtitle tag="h3" className="mb-3">
+            {author}
           </CardSubtitle>
           <CardText>{text}</CardText>
           <Button

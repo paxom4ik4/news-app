@@ -1,23 +1,94 @@
 import React, { useEffect, useState } from "react";
+import "./App.css";
 import Header from "../Header";
 import INewsItem from "../../interfaces/INews";
 import News from "../News";
 import AddItem from "../AddItem";
-import { getDate, getDateNumber } from "../../utils/getDate";
 import Menu from "../Menu/Menu";
 import NewsItemPage from "../NewsItemPage";
+import EntryPage from "../EntryPage";
+import { getDate, getDateNumber } from "../../utils/getDate";
+import { User, users } from "../../data/users";
+import { IUser } from "../../interfaces/IUser";
 
 const App: React.FC = (): JSX.Element => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  useEffect(() => {
+    if (localStorage.getItem("paxom4ik-news-app-users") !== null) {
+      const currentUsers = JSON.parse(
+        localStorage.getItem("paxom4ik-news-app-users")!
+      );
+      currentUsers.forEach((user: IUser) => {
+        users.push(user);
+      });
+    } else {
+      users.push(
+        new User("0", "pasha.zelenko001@gmail.com", "paxom4ik", "1234", [])
+      );
+    }
+  }, []);
+  useEffect(() => {
+    if (localStorage.getItem("paxom4ik-news-app-isLogged") !== null) {
+      const isLogged = Boolean(
+        localStorage.getItem("paxom4ik-news-app-isLogged")
+      );
+      setLogged(isLogged);
+    } else {
+      setLogged(false);
+    }
+  }, []);
+  useEffect(() => {
+    if (localStorage.getItem("paxom4ik-news-app-currentUser") !== null) {
+      const currentUser = JSON.parse(
+        localStorage.getItem("paxom4ik-news-app-currentUser")!
+      );
+      if (typeof currentUser === "string") {
+        setGuest(true);
+      } else if (typeof currentUser === "object") {
+        setCurrentUser(currentUser);
+        setLikedByCurrentUser(currentUser.likedNews);
+      }
+    } else {
+      setGuest(true);
+    }
+  }, []);
+
+  const [isLogged, setLogged] = useState<boolean>(false);
+  const [isGuest, setGuest] = useState<boolean>(false);
+
+  const [currentUser, setCurrentUser] = useState<IUser>(
+    users[users.length - 1]
+  );
+
+  const setCurrentUserHandler = (user: IUser) => {
+    localStorage.setItem("paxom4ik-news-app-currentUser", JSON.stringify(user));
+    setCurrentUser(user);
+  };
+
+  const setLoggedHandler: () => void = () => {
+    setLogged(true);
+  };
+
+  const unloggedHandler: () => void = () => {
+    localStorage.setItem("paxom4ik-news-app-isLogged", "");
+    setLogged(false);
+  };
+
+  const setGuestHandler: () => void = () => {
+    setGuest(!isGuest);
+  };
+
+  const [likedByCurrentUser, setLikedByCurrentUser] = useState<INewsItem[]>([]);
+
   const [news, setNews] = useState<INewsItem[]>([]);
   let maxId: number = 100;
-
   useEffect(() => {
     const darkMode = localStorage.getItem("paxom4ik-app-dark-mode");
     setDarkMode(Boolean(darkMode));
 
     const news = JSON.parse(localStorage.getItem("paxom4ik-app-news")!) || [
       {
+        isHidenByAuthor: false,
         title:
           "Разработчик процессоров Джим Келлер перешел на работу в Tenstorrent",
         subtitle: "Карьера",
@@ -31,8 +102,10 @@ const App: React.FC = (): JSX.Element => {
         id: 0,
         publishedDate: getDate(),
         publishedDateNumber: getDateNumber(),
+        author: "Илья Казаков",
       },
       {
+        isHidenByAuthor: false,
         title: "На YouTube полно видео про инвестиции.",
         subtitle: "Экономика. Образование",
         text:
@@ -45,8 +118,10 @@ const App: React.FC = (): JSX.Element => {
         id: 1,
         publishedDate: getDate(),
         publishedDateNumber: getDateNumber(),
+        author: "Иван Комаров",
       },
       {
+        isHidenByAuthor: false,
         title:
           "НАСА рассказало, как телескоп SPHEREx будет искать признаки Большого взрыва",
         subtitle: "Научно-популярное",
@@ -60,8 +135,10 @@ const App: React.FC = (): JSX.Element => {
         id: 2,
         publishedDate: getDate(),
         publishedDateNumber: getDateNumber(),
+        author: "Илья Казаков",
       },
       {
+        isHidenByAuthor: false,
         title:
           "Эксперты рассказали, какие криптовалюты сильно вырастут в этом году",
         subtitle: "Экономика. Криптовалюта",
@@ -75,8 +152,10 @@ const App: React.FC = (): JSX.Element => {
         id: 3,
         publishedDate: getDate(),
         publishedDateNumber: getDateNumber(),
+        author: "Иван Комаров",
       },
       {
+        isHidenByAuthor: false,
         title: "Британский регулятор начал проверять сделку по покупке Arm",
         subtitle: "Законодательство в IT",
         text:
@@ -89,6 +168,7 @@ const App: React.FC = (): JSX.Element => {
         id: 4,
         publishedDate: getDate(),
         publishedDateNumber: getDateNumber(),
+        author: "Иван Комаров",
       },
     ];
     setNews(news);
@@ -112,6 +192,7 @@ const App: React.FC = (): JSX.Element => {
 
   const [isNewsItemPage, toggleNewsItemPage] = useState<boolean>(false);
   const [newsItemPageItem, setNewsItemPageItem] = useState<INewsItem>({
+    isHidenByAuthor: false,
     title:
       "Разработчик процессоров Джим Келлер перешел на работу в Tenstorrent",
     subtitle: "Карьера",
@@ -125,6 +206,7 @@ const App: React.FC = (): JSX.Element => {
     id: 0,
     publishedDate: getDate(),
     publishedDateNumber: getDateNumber(),
+    author: "Илья Казаков",
   });
 
   const toggleNewsItemPageHandler = () => {
@@ -134,7 +216,6 @@ const App: React.FC = (): JSX.Element => {
   const setNewsItemPageHandler = (id: number) => {
     const currentItemIdx: number = news.findIndex((el) => el.id === id);
     const currentNews = news[currentItemIdx];
-    console.log(currentNews);
     setNewsItemPageItem(currentNews);
   };
 
@@ -182,34 +263,6 @@ const App: React.FC = (): JSX.Element => {
     setNews(newsUpdated);
   };
 
-  const dropDonwHandler = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
-    const targetElement: HTMLElement = event.target as HTMLTextAreaElement;
-    const targetValue: string | null = targetElement.textContent;
-
-    const newsUpdated: Array<INewsItem> = [];
-    if (targetValue === "All") {
-      news.forEach((elem) => {
-        elem.isActive = true;
-        newsUpdated.push(elem);
-      });
-      setNews(newsUpdated);
-    } else {
-      const filteredItems: Array<object> = [];
-      filteredItems.push(news.filter((elem) => elem.group === targetValue));
-
-      news.forEach((elem) => {
-        if (elem.group === targetValue) {
-          elem.isActive = true;
-        } else {
-          elem.isActive = false;
-        }
-        newsUpdated.push(elem);
-      });
-      setNews(newsUpdated);
-    }
-  };
   const editItem = (
     id: number,
     title: string,
@@ -241,12 +294,14 @@ const App: React.FC = (): JSX.Element => {
     text: string,
     group: string,
     newGroup: string,
-    url: string
+    url: string,
+    author: string
   ) => {
     let newItem;
     if (newGroup !== "" || newGroup.trim() !== "") {
       setNewNewsGroup(newGroup);
       newItem = {
+        isHidenByAuthor: false,
         title: title,
         subtitle: subtitle,
         text: text,
@@ -257,9 +312,11 @@ const App: React.FC = (): JSX.Element => {
         id: maxId++,
         publishedDate: getDate(),
         publishedDateNumber: getDateNumber(),
+        author: author,
       };
     } else {
       newItem = {
+        isHidenByAuthor: false,
         title: title,
         subtitle: subtitle,
         text: text,
@@ -270,6 +327,7 @@ const App: React.FC = (): JSX.Element => {
         id: maxId++,
         publishedDate: getDate(),
         publishedDateNumber: getDateNumber(),
+        author: author,
       };
     }
     const newsUpdated = [...news, newItem];
@@ -331,9 +389,138 @@ const App: React.FC = (): JSX.Element => {
     setNews(newsSorted);
   };
 
-  return (
-    <div className="app">
+  const dropDonwHandler = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    const targetElement: HTMLElement = event.target as HTMLTextAreaElement;
+    const targetValue: string | null = targetElement.textContent;
+
+    const newsUpdated: Array<INewsItem> = [];
+    if (targetValue === "All") {
+      news.forEach((elem) => {
+        elem.isActive = true;
+        newsUpdated.push(elem);
+      });
+      setNews(newsUpdated);
+    } else {
+      const filteredItems: Array<object> = [];
+      filteredItems.push(news.filter((elem) => elem.group === targetValue));
+
+      news.forEach((elem) => {
+        if (elem.group === targetValue) {
+          elem.isActive = true;
+        } else {
+          elem.isActive = false;
+        }
+        newsUpdated.push(elem);
+      });
+      setNews(newsUpdated);
+    }
+  };
+
+  const authorsHandler = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    const targetElement: HTMLElement = event.target as HTMLTextAreaElement;
+    const targetValue: string | null = targetElement.textContent;
+    const newsUpdated: Array<INewsItem> = [];
+    if (targetValue === "All") {
+      news.forEach((elem) => {
+        elem.isHidenByAuthor = false;
+        newsUpdated.push(elem);
+      });
+      setNews(newsUpdated);
+    } else {
+      const filteredItems: Array<object> = [];
+      filteredItems.push(news.filter((elem) => elem.author === targetValue));
+      news.forEach((elem) => {
+        if (elem.author === targetValue) {
+          elem.isHidenByAuthor = false;
+        } else {
+          elem.isHidenByAuthor = true;
+        }
+        newsUpdated.push(elem);
+      });
+      setNews(newsUpdated);
+    }
+  };
+
+  const [guestToLike, setGuestToLike] = useState<boolean>(false);
+
+  const setToLikedNews = (id: number) => {
+    if (isGuest) {
+      setGuestToLike(true);
+      setTimeout(() => {
+        setGuestToLike(false);
+      }, 3000);
+    } else {
+      const currentItemIdx: number = news.findIndex((el) => el.id === id);
+      const selectedItem = news[currentItemIdx];
+      currentUser.likedNews = [...currentUser.likedNews, selectedItem];
+
+      const updatedNews = [...new Set(currentUser.likedNews)];
+      currentUser.likedNews = updatedNews;
+      setLikedByCurrentUser(updatedNews);
+    }
+  };
+
+  const removeFromLiked = (id: number) => {
+    const removeIdx = currentUser.likedNews.findIndex((el) => el.id === id);
+
+    const updatedNews = [
+      ...currentUser.likedNews.slice(0, removeIdx),
+      ...currentUser.likedNews.slice(removeIdx + 1),
+    ];
+
+    currentUser.likedNews = updatedNews;
+    setLikedByCurrentUser(currentUser.likedNews);
+  };
+
+  const [activeNavItem, setActiveNavItem] = useState<string>("all-news");
+  const allItemClassName =
+    activeNavItem === "all-news"
+      ? "news-nav-item news-nav-item-active"
+      : "news-nav-item";
+  const likedItemClassName =
+    activeNavItem === "liked-news"
+      ? "news-nav-item news-nav-item-active"
+      : "news-nav-item";
+
+  const [showLikes, toggleShowLikes] = useState<boolean>(false);
+
+  let newsNavigationName = isMenuOpen
+    ? "news-navigation news-navigation-open"
+    : "news-navigation";
+  if (darkMode) newsNavigationName += " dark-nav";
+  const newsNavContent = (
+    <div className={newsNavigationName}>
+      <div
+        className={allItemClassName}
+        onClick={() => {
+          setActiveNavItem("all-news");
+          toggleShowLikes(false);
+        }}
+      >
+        Все новости
+      </div>
+      <div
+        className={likedItemClassName}
+        onClick={() => {
+          setActiveNavItem("liked-news");
+          toggleShowLikes(true);
+        }}
+      >
+        Избранное
+      </div>
+    </div>
+  );
+
+  const mainContent = (
+    <>
       <Menu
+        news={news}
+        isLogged={isLogged}
+        setGuestHandler={setGuestHandler}
+        setLoggedHandler={unloggedHandler}
+        currentUser={currentUser}
         sortByName={sortByName}
         sortByDate={sortByDate}
         darkMode={darkMode}
@@ -341,6 +528,7 @@ const App: React.FC = (): JSX.Element => {
         isMenuOpen={isMenuOpen}
         groups={groups}
         dropDonwHandler={dropDonwHandler}
+        authorsHandler={authorsHandler}
         menuOpenHandler={menuOpenHandler}
       />
       <Header
@@ -349,7 +537,15 @@ const App: React.FC = (): JSX.Element => {
         isMenuOpen={isMenuOpen}
         menuOpenHandler={menuOpenHandler}
       />
+      {newsNavContent}
       <News
+        setGuestHandler={setGuestHandler}
+        isGuest={isGuest}
+        removeFromLiked={removeFromLiked}
+        guestToLike={guestToLike}
+        showLikes={showLikes}
+        likedByCurrentUser={likedByCurrentUser}
+        setToLikedNews={setToLikedNews}
         toggleNewsItemPage={toggleNewsItemPageHandler}
         darkMode={darkMode}
         isMenuOpen={isMenuOpen}
@@ -366,8 +562,30 @@ const App: React.FC = (): JSX.Element => {
         toggleNewsItemPage={toggleNewsItemPageHandler}
       />
       <AddItem addNewItem={addNewItem} groups={groups} />
+    </>
+  );
+
+  return (
+    <div className="app">
+      {isLogged ? (
+        mainContent
+      ) : isGuest ? (
+        mainContent
+      ) : (
+        <EntryPage
+          setMenuOpen={menuOpenHandler}
+          users={users}
+          setCurrentUser={setCurrentUserHandler}
+          setGuestHandler={setGuestHandler}
+          setLoggedHandler={setLoggedHandler}
+        />
+      )}
     </div>
   );
 };
 
 export default App;
+
+export const currentUsers = JSON.parse(
+  localStorage.getItem("paxom4ik-news-app-users")!
+);
