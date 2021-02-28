@@ -51,7 +51,7 @@
 }
 
 .current-sorting-item {
-  width: 70%;
+  width: 60%;
   text-align: right;
   font-size: 1rem;
   font-weight: 400;
@@ -148,7 +148,7 @@
 }
 
 .dropdown {
-  width: 100%;
+  width: 120%;
 }
 
 .dropdown-menu-dark {
@@ -181,6 +181,30 @@
 
 .logout:active {
   cursor: none;
+}
+
+.rss-input {
+  margin-top: 15px;
+  height: 30px;
+}
+
+.add-new-rss-btn {
+  width: 100%;
+  font-size: 0.7em;
+}
+
+.rss-item {
+  transition: 0.25s;
+}
+
+.rss-item:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+
+.active-rss-item {
+  text-decoration: underline;
 }
 
 @keyframes menuLoyal {

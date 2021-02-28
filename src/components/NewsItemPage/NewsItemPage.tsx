@@ -46,7 +46,7 @@ const NewsItemPage: React.FC<INewsItemPageProps> = ({
         <div className="news-item-page-text">
           <p>{news.subtitle}</p>
           <p className="news-item-page-txt">{news.text}</p>
-          <p>{news.publishedDate}</p>
+          <p>{news.publishedDate.slice(0, -5)}</p>
         </div>
       </div>
     </Jumbotron>

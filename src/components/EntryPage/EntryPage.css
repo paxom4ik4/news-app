@@ -82,6 +82,10 @@
   cursor: pointer;
 }
 
+.entry-page-btn {
+  justify-self: flex-end;
+}
+
 @media (max-width: 1024px) {
   .login-registration-field {
     width: 100%;
@@ -90,6 +94,7 @@
 
 @media (max-width: 768px) {
   .selected-entry-content .entry-btn {
+    display: flex;
     width: 50%;
   }
   .login-registration-content {
@@ -104,7 +109,16 @@
   }
 }
 
+@media (max-width: 425px) {
+  .selected-entry-content {
+    max-width: 425px;
+  }
+}
+
 @media (max-width: 375px) {
+  .selected-entry-content {
+    max-width: 375px;
+  }
   .selected-entry-content .entry-btn {
     width: 70%;
   }
@@ -112,5 +126,11 @@
     font-size: 0.8em;
     padding: 0 20px;
     width: 100%;
+  }
+}
+
+@media (max-width: 320px) {
+  .selected-entry-content {
+    max-width: 320px;
   }
 }

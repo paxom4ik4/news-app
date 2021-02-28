@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import INewsItem from "./INews";
 import { IUser } from "./IUser";
 
@@ -18,8 +19,8 @@ export interface IMenuProps {
   setGuestHandler: () => void;
   setLoggedHandler: () => void;
   currentUser: IUser;
-  sortByName: () => void;
-  sortByDate: () => void;
+  sortByAscDate: () => void;
+  sortByDescDate: () => void;
   darkMode: boolean;
   darkModeHandler: () => void;
   isMenuOpen: boolean;
@@ -27,6 +28,11 @@ export interface IMenuProps {
   dropDonwHandler: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   authorsHandler: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   menuOpenHandler: () => void;
+  rssItems: string[];
+  setRssItems: Dispatch<SetStateAction<string[]>>;
+  setCurrentRss: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  isGuest: boolean;
+  currentRss: string;
 }
 
 export interface IAddItemProps {
@@ -43,6 +49,10 @@ export interface IAddItemProps {
 }
 
 export interface INewsProps {
+  prevPageHandler: () => void;
+  nextPageHandler: () => void;
+  currentPage: number;
+  isNewsLoading: boolean;
   setGuestHandler: () => void;
   isGuest: boolean;
   removeFromLiked: (id: number) => void;
@@ -64,6 +74,7 @@ export interface INewsProps {
   ) => void;
   isMenuOpen: boolean;
   darkMode: boolean;
+  isCurrencyPageOpen: boolean;
 }
 
 export interface INewsItemProps {
@@ -117,4 +128,10 @@ export interface IEntryPageProps {
   setCurrentUser: (user: IUser) => void;
   setGuestHandler: () => void;
   setLoggedHandler: () => void;
+}
+
+export interface ICurrencyPageProps {
+  darkMode: boolean;
+  isCurrencyPage: boolean;
+  setCurrencyPage: () => void;
 }
