@@ -5,6 +5,8 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Button,
+  Input,
 } from "reactstrap";
 import Switch from "react-switch";
 import { IMenuProps } from "../../interfaces/ComponentsProps";
@@ -17,8 +19,8 @@ const Menu: React.FC<IMenuProps> = ({
   setGuestHandler,
   setLoggedHandler,
   currentUser,
-  sortByName,
-  sortByDate,
+  sortByAscDate,
+  sortByDescDate,
   darkMode,
   darkModeHandler,
   isMenuOpen,
@@ -27,6 +29,11 @@ const Menu: React.FC<IMenuProps> = ({
   authorsHandler,
   menuOpenHandler,
   news,
+  rssItems,
+  setRssItems,
+  currentRss,
+  setCurrentRss,
+  isGuest,
 }): JSX.Element => {
   useEffect(() => {
     localStorage.getItem("currentGroup") !== null
@@ -95,7 +102,9 @@ const Menu: React.FC<IMenuProps> = ({
 
   const authors: Array<string> = [];
   news.forEach((news) => {
-    authors.push(news.author);
+    if (news.author) {
+      authors.push(news.author);
+    }
   });
 
   const uniqueAuthors: Set<string> = new Set(authors);
@@ -139,7 +148,9 @@ const Menu: React.FC<IMenuProps> = ({
   const [isSortingOpen, setIsSortingOpen] = useState<boolean>(false);
   const toggleSorting = (): void => setIsSortingOpen((prevState) => !prevState);
 
-  const [currentSortItem, setCurrentSortItem] = useState<string>("По Дате");
+  const [currentSortItem, setCurrentSortItem] = useState<string>(
+    "По Дате (Убывание)"
+  );
 
   const sortingItems = (
     <>
@@ -150,19 +161,19 @@ const Menu: React.FC<IMenuProps> = ({
         <DropdownMenu className={dropdownMenuClassName}>
           <DropdownItem
             onClick={() => {
-              setCurrentSortItem("По Дате");
-              sortByDate();
+              setCurrentSortItem("По Дате (Убывание)");
+              sortByDescDate();
             }}
           >
-            По Дате
+            По Дате (Убывание)
           </DropdownItem>
           <DropdownItem
             onClick={() => {
-              setCurrentSortItem("По Названию");
-              sortByName();
+              setCurrentSortItem("По Дате (Возрастание)");
+              sortByAscDate();
             }}
           >
-            По Названию
+            По Дате (Возрастание)
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
@@ -173,6 +184,54 @@ const Menu: React.FC<IMenuProps> = ({
   const closeIcon = <FontAwesomeIcon icon={faTimes} />;
   const userIcon = <FontAwesomeIcon icon={faUser} />;
 
+  const rssItemsContent = rssItems.map((item, id) => {
+    const liClassName = item === currentRss ? "active-rss-item" : "rss-item";
+    return (
+      <li className={liClassName} key={id.toString()}>
+        {item}
+      </li>
+    );
+  });
+
+  const [newRss, setNewRss] = useState<string>("");
+
+  const CORS_PROXY = "https://api.allorigins.win/raw?url=";
+
+  const getRssDate = async (rss: string) => {
+    const res = await fetch(`${CORS_PROXY}${rss}`);
+    return res;
+  };
+
+  const newRssHandler = () => {
+    if (rssItems.indexOf(newRss) !== -1) {
+      setNewRss("Такой RSS уже существует");
+      setTimeout(() => {
+        setNewRss("");
+      }, 1500);
+      return 0;
+    }
+    if (newRss.length > 12) {
+      const response = getRssDate(newRss);
+      response.then((data) => {
+        if (data.status === 200) {
+          setRssItems([...rssItems, newRss]);
+        } else {
+          setNewRss("Недоступный RSS");
+          setTimeout(() => {
+            setNewRss("");
+          }, 1500);
+        }
+      });
+    } else {
+      setNewRss("Некорректный RSS");
+      setTimeout(() => {
+        setNewRss("");
+      }, 1500);
+    }
+    setNewRss("");
+  };
+
+  console.log(currentUser.username);
   return (
     <div className={menuClassName}>
       <Jumbotron className={menuContentClassName}>
@@ -203,6 +262,39 @@ const Menu: React.FC<IMenuProps> = ({
         <div className="menu-item">{sortingItems}</div>
         <div className="filter-items-btn">{filterMenu}</div>
         <div className="filter-items-btn ">{authorFilter}</div>
+        {currentUser.username === "admin" ? (
+          isGuest ? (
+            ""
+          ) : (
+            <div className="admin-menu">
+              <div className="linked-rss">Подключенные RSS: </div>
+              <div>
+                <ul onClick={(e) => setCurrentRss(e)}>{rssItemsContent}</ul>
+              </div>
+              <Button
+                className="add-new-rss-btn"
+                onClick={() => newRssHandler()}
+              >
+                Добавить RSS
+              </Button>
+              <Input
+                className="rss-input"
+                placeholder="Введите RSS"
+                value={newRss}
+                onChange={(event) => setNewRss(event.target.value)}
+              ></Input>
+            </div>
+          )
+        ) : currentUser.username === "Guest" ? (
+          ""
+        ) : (
+          <div className="admin-menu">
+            <div className="linked-rss">Подключенные RSS: </div>
+            <div>
+              <ul onClick={(e) => setCurrentRss(e)}>{rssItemsContent}</ul>
+            </div>
+          </div>
+        )}
         <div className="menu-close-btn" onClick={() => menuOpenHandler()}>
           {closeIcon}
         </div>

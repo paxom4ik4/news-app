@@ -1,10 +1,13 @@
-import React from "react";
 import { Jumbotron, Container, Alert } from "reactstrap";
 import "./News.css";
 import NewsItem from "./NewsItem";
 import { INewsProps } from "../../interfaces/ComponentsProps";
 
 const News: React.FC<INewsProps> = ({
+  prevPageHandler,
+  nextPageHandler,
+  currentPage,
+  isNewsLoading,
   setGuestHandler,
   isGuest,
   removeFromLiked,
@@ -20,6 +23,7 @@ const News: React.FC<INewsProps> = ({
   editItem,
   isMenuOpen,
   darkMode,
+  isCurrencyPageOpen,
 }): JSX.Element => {
   const newsItems: React.ReactFragment[] = news.map((elem, index) => {
     let isLiked = false;
@@ -58,14 +62,28 @@ const News: React.FC<INewsProps> = ({
 
   const activeItems = news.filter((elem) => elem.isActive).length;
   const newsClassName = darkMode ? "news dark" : "news light";
-  const menuClassName = isMenuOpen
-    ? "news-container news-menu-open"
-    : "news-container";
-
+  const menuClassName =
+    isMenuOpen || isCurrencyPageOpen
+      ? "news-container news-menu-open"
+      : "news-container";
   return (
     <div className="news-background">
       <div className={menuClassName}>
         <Jumbotron fluid className={newsClassName}>
+          {showLikes ? (
+            ""
+          ) : (
+            <div className="pages">
+              <div className="page-btn" onClick={() => prevPageHandler()}>
+                Prev
+              </div>
+              <div className="current-page">{currentPage}</div>
+              <div className="page-btn" onClick={() => nextPageHandler()}>
+                Next
+              </div>
+            </div>
+          )}
+
           <Container fluid className="news-container-contens">
             {guestToLike ? (
               <Alert className="alert-guest-likes">
@@ -74,7 +92,9 @@ const News: React.FC<INewsProps> = ({
             ) : (
               ""
             )}
-            {showLikes ? (
+            {isNewsLoading ? (
+              <p className="loading-news">Загрузка...</p>
+            ) : showLikes ? (
               likedByCurrentUser.length === 0 ? (
                 isGuest ? (
                   <p className="no-news">

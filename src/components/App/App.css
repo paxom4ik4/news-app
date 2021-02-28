@@ -11,7 +11,7 @@
   left: 0;
   top: 58px;
   height: 40px;
-  z-index: 5;
+  z-index: 3;
   padding: 0 15px;
   transition: 0.4s;
 }
@@ -44,6 +44,19 @@
 
 .dark-nav .news-nav-item-active {
   background-color: rgb(33, 33, 36);
+}
+
+.currency-page-btn {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  transition: 0.25s;
+}
+
+.currency-page-btn:hover {
+  opacity: 0.8;
+  transition: 0.3s;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {

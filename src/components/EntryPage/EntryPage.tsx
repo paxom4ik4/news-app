@@ -139,33 +139,36 @@ const EntryPage: React.FC<IEntryPageProps> = ({
 
   const loginContent = (
     <>
-      <InputGroup>
-        <Label for="email">Введите ваше имя пользователя или E-mail</Label>
-        <Input
-          placeholder="Username or E-mail"
-          id="email"
-          value={username}
-          onChange={(e) => usernameHandler(e)}
-        />
-      </InputGroup>
-      <InputGroup>
-        <Label for="password">Введите пароль</Label>
-        <Input
-          placeholder="Password"
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => passwordHandler(e)}
-        />
-      </InputGroup>
-      <br />
-      <InputGroup className="entry-btn">
-        <Input
-          type="submit"
-          value="Войти"
-          onClick={() => login(username, password)}
-        />
-      </InputGroup>
+      <Form>
+        <InputGroup>
+          <Label for="email">Введите ваше имя пользователя или E-mail</Label>
+          <Input
+            placeholder="Username or E-mail"
+            id="email"
+            value={username}
+            onChange={(e) => usernameHandler(e)}
+          />
+        </InputGroup>
+        <InputGroup>
+          <Label for="password">Введите пароль</Label>
+          <Input
+            placeholder="Password"
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => passwordHandler(e)}
+          />
+        </InputGroup>
+        <br />
+        <InputGroup className="entry-btn">
+          <Input
+            className="entry-page-btn"
+            type="submit"
+            value="Войти"
+            onClick={() => login(username, password)}
+          />
+        </InputGroup>
+      </Form>
     </>
   );
 
@@ -204,6 +207,7 @@ const EntryPage: React.FC<IEntryPageProps> = ({
         <br />
         <InputGroup className="entry-btn">
           <Input
+            className="entry-page-btn"
             type="submit"
             value="Зарегистрироваться"
             onClick={(event) =>

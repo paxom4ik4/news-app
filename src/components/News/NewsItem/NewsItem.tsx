@@ -36,6 +36,7 @@ const NewsItem: React.FC<INewsItemProps> = ({
   text,
   imgUrl,
   id,
+  group,
   author,
   deleteNewsItem,
   onToggleDelete,
@@ -197,10 +198,14 @@ const NewsItem: React.FC<INewsItemProps> = ({
         <CardBody>
           <div className="card-header">
             <CardText className="cart-item-published-date">
-              {publishedDate}
+              {publishedDate.slice(0, -5)}
             </CardText>
             {showLikes ? (
-              <div id={id.toString()} onClick={() => removeFromLiked(id)} className="close-btn-on-liked">
+              <div
+                id={id.toString()}
+                onClick={() => removeFromLiked(id)}
+                className="close-btn-on-liked"
+              >
                 {closeIcon}
               </div>
             ) : (
@@ -220,7 +225,7 @@ const NewsItem: React.FC<INewsItemProps> = ({
           ) : (
             <CardImg top width="100%" src={imgUrl} alt="Card image cap" />
           )}
-
+          <CardTitle>{group}</CardTitle>
           <CardTitle tag="h5">{title}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
             {subtitle}
